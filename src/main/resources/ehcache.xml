@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://blog.csdn.net/infoworld/article/details/121420920 -->
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false" monitoring="autodetect" dynamicConfig="true">
+    <diskStore path="java.io.tmpdir"/>
+    <defaultCache eternal="false"
+                  maxElementsInMemory="100"
+                  overflowToDisk="false"
+                  diskPersistent="false"
+                  timeToIdleSeconds="600"
+                  timeToLiveSeconds="0"
+                  memoryStoreEvictionPolicy="LRU" />
+    <!-- 用于存储session的缓存 -->
+    <cache name="EhCacheSession"
+           eternal="false"
+           maxElementsInMemory="500"
+           overflowToDisk="false"
+           diskPersistent="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="0"
+           memoryStoreEvictionPolicy="LRU" />
+<!--     <cache name="/test/testDb1"
+           eternal="false"
+           maxElementsInMemory="500"
+           overflowToDisk="false"
+           diskPersistent="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="0"
+           memoryStoreEvictionPolicy="LRU" /> -->
+</ehcache>
