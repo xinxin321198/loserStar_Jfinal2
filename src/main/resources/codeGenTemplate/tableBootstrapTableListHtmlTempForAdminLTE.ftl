@@ -48,21 +48,42 @@ ${r'<@loserStarBody title="'}${tableRemarks}${r'" title2="'}${tableRemarks}${r'"
 
                     <!-- 树形列表的一些按钮，当然也可以放表格的按钮---begin -->
                     <div id="toolbar" class="btn-group">
-                                <button type="button" class="btn btn-primary" onclick="listPageEvent.addTopNode()">
-                                    <span class="glyphicon glyphicon-plus"></span>新增顶层节点
-                                </button>
-                                <button id="addSub" type="button" class="btn btn-primary" onclick="listPageEvent.addSubNode()" disabled>
-                                    <span class="glyphicon glyphicon-plus"></span>新增下级节点
-                                </button>
-                                <button type="button" class="btn bg-olive" onclick="listPageEvent.expandAll()">
-                                    <span class="fa fa-angle-double-down"></span>全部展开
-                                </button>
-                                <button type="button" class="btn bg-olive" onclick="listPageEvent.collapseAll()">
-                                    <span class="fa fa-angle-double-up"></span>全部收缩
-                                </button>
-                                <button type="button" class="btn btn-info" onclick="listPageEvent.refresh()">
-                                    <span class="glyphicon glyphicon-repeat"></span>刷新
-                                </button>
+                            <button type="button" class="btn btn-primary" onclick="listPageEvent.addTopNode()">
+                                <span class="glyphicon glyphicon-plus"></span>新增顶层节点
+                            </button>
+                            <button id="addSub" type="button" class="btn btn-primary" onclick="listPageEvent.addSubNode()" disabled>
+                                <span class="glyphicon glyphicon-plus"></span>新增下级节点
+                            </button>
+                            <button type="button" class="btn bg-olive" onclick="listPageEvent.expandAll()">
+                                <span class="fa fa-angle-double-down"></span>全部展开
+                            </button>
+                            <button type="button" class="btn bg-olive" onclick="listPageEvent.collapseAll()">
+                                <span class="fa fa-angle-double-up"></span>全部收缩
+                            </button>
+                            <button type="button" class="btn btn-info" onclick="listPageEvent.refresh()">
+                                <span class="glyphicon glyphicon-repeat"></span>刷新
+                            </button>
+                    </div>
+
+                    <div id="toolbar" class="btn-group">
+                            <button type="button" class="btn btn-primary" onclick="window.open('formPage.do', '_self');">
+                                <span class="glyphicon glyphicon-plus"></span>新增
+                            </button>
+                            <button id="addSub" type="button" class="btn btn-primary" onclick="listPageEvent.refresh()" disabled>
+                                <span class="glyphicon glyphicon-plus"></span>刷新
+                            </button>
+                            <button type="button" class="btn bg-olive" onclick="table.getCheckedRows();">
+                                <span class="fa fa-angle-double-down"></span>获取选中行的html数据
+                            </button>
+                            <button type="button" class="btn bg-olive" onclick="table.getChkedIds();">
+                                <span class="fa fa-angle-double-up"></span>获取选中行id
+                            </button>
+                            <button type="button" class="btn btn-info" onclick="table.getChkedDatas();">
+                                <span class="glyphicon glyphicon-repeat"></span>获取选中行的数据对象
+                            </button>
+                            <button type="button" class="btn btn-info" onclick="listPageEvent.exportExcel()">
+                                <span class="glyphicon glyphicon-repeat"></span>导出Excel
+                            </button>
                     </div>
                     <!-- 树形列表的一些按钮，当然也可以放表格的按钮---end -->
 
@@ -80,6 +101,13 @@ ${r'<@loserStarBody title="'}${tableRemarks}${r'" title2="'}${tableRemarks}${r'"
                         </tfoot>
                     </table>
                     <!-- 本段代码为代码生成器根据表[${tableName}]结构自动生成的bootstrap的表格的html，犯懒时候从这里粘过去用----end-->
+                    <!-- 分页组件begin -->
+                    <div class="panle-footer">
+                        <div id="pageDiv">
+                        </div>
+                    </div>
+                    <!-- 分页组件end -->
+
                 </div>
                 <!-- /.box-body -->
             </div>

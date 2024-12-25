@@ -8,7 +8,7 @@ formPageEvent.save = function () {
     <#--  保存时的代码  -->
     var saveData = {};
     <#list fieldList as field>
-    saveData.${field.name} = $("#${field.name}").val();
+    saveData.${field.name} = $("#${field.name}").val();//${field.remarks}
     </#list>
     //校验值
     <#list fieldList as field>

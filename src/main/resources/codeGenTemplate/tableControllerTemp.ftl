@@ -33,21 +33,23 @@ public class ${className}Controller extends PcBaseController {
             String ${field.name} = getPara("${field.name}");
             </#list>
 			//排序字段
-			String sort_filed = getPara("sort_filed");
-			String sort_type = getPara("sort_type");
+			//String sort_filed = getPara("sort_filed");
+			//String sort_type = getPara("sort_type");
 			
 			WhereHelper whereHelper = new WhereHelper();
+			List<Object> queryParamList = new ArrayList<Object>();
             <#list fieldList as field>
             if (checkNull(${field.name})) {
-				whereHelper.addStrWhere("and ${field.name} like '%"+${field.name}+"%'");
+				whereHelper.addStrWhere("and ${field.name} like ?");
+				queryParamList.add("%"+${field.name}+"%");
 			}
             </#list>
 			//排序
-			if (checkNull(sort_filed)) {
-				whereHelper.addStrOrder("order by "+getSortField(sort_filed)+" "+sort_type);
-			}
-			whereHelper.addStrWhere("and CREATE_USER_CODE='"+getUserId()+"'");
-			Page<${className}> dataPage =  ${fristLowerClassName}Dao.getListPage(getPageNumber(), getPageSize(), whereHelper, ${className}.class, null);
+			//if (checkNull(sort_filed)) {
+				//whereHelper.addStrOrder("order by "+getSortField(sort_filed)+" "+sort_type);
+				//whereHelper.addStrOrder("order by sort asc");
+			//}
+			Page<${className}> dataPage =  ${fristLowerClassName}Dao.getListPage(getPageNumber(), getPageSize(), whereHelper, ${className}.class, queryParamList.toArray());
 			result.ok("获取数据成功");
 			result.setData(dataPage);
 		} catch (Exception e) {
@@ -67,20 +69,22 @@ public class ${className}Controller extends PcBaseController {
             String ${field.name} = getPara("${field.name}");
             </#list>
 			//排序字段
-			String sort_filed = getPara("sort_filed");
-			String sort_type = getPara("sort_type");
-			
+			//String sort_filed = getPara("sort_filed");
+			//String sort_type = getPara("sort_type");
 			WhereHelper whereHelper = new WhereHelper();
+			List<Object> queryParamList = new ArrayList<Object>();
             <#list fieldList as field>
             if (checkNull(${field.name})) {
-				whereHelper.addStrWhere("and ${field.name} like '%"+${field.name}+"%'");
+				whereHelper.addStrWhere("and ${field.name} like ?");
+				queryParamList.add("%"+${field.name}+"%");
 			}
             </#list>
 			//排序
-			if (checkNull(sort_filed)) {
-				whereHelper.addStrOrder("order by "+getSortField(sort_filed)+" "+sort_type);
-			}
-			List<${className}> listData =  ${fristLowerClassName}Dao.getList(whereHelper, ${className}.class, null);
+			//if (checkNull(sort_filed)) {
+				//whereHelper.addStrOrder("order by "+getSortField(sort_filed)+" "+sort_type);
+			//}
+			whereHelper.addStrOrder("order by sort asc");
+			List<${className}> listData =  ${fristLowerClassName}Dao.getList(whereHelper, ${className}.class, queryParamList.toArray());
 			result.ok("获取数据成功");
 			result.setData(listData);
 		} catch (Exception e) {

@@ -73,13 +73,13 @@ public class EntityGennerate {
 	private static String dictConstantsOutPath = PathKit.getWebRootPath() + File.separator + ".." + File.separator + "src" + File.separator + "com" + File.separator + "loserstar" + File.separator + "constants" + File.separator;
 
 	// Jqwidgets所使用的表字段定义的js文件
-	private static String tableFieldOutPath = PathKit.getWebRootPath() + File.separator + "js" + File.separator + "tableField" + File.separator;
+	private static String tableFieldOutPath = PathKit.getWebRootPath() + File.separator + "static/js" + File.separator + "tableField" + File.separator;
 
 	// 前端适应的常量js
-	private static String dictJsOutPath = PathKit.getWebRootPath() + File.separator + "js" + File.separator + "dict" + File.separator;
+	private static String dictJsOutPath = PathKit.getWebRootPath() + File.separator + "static/js" + File.separator + "dict" + File.separator;
 
 	// Jqwidgets所使用的vo的字段定义
-	private static String voFieldJsOutPath = PathKit.getWebRootPath() + File.separator + "js" + File.separator + "voField" + File.separator;
+	private static String voFieldJsOutPath = PathKit.getWebRootPath() + File.separator + "static/js" + File.separator + "voField" + File.separator;
 	
 	//bootstrap表单生成的目录
 	private static String bootstrapFormHtmlOutPath =PathKit.getWebRootPath()+File.separator+"html"+File.separator+"bootstrapForm"+File.separator;
