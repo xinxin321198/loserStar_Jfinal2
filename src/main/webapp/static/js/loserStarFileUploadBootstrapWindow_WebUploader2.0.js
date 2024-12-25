@@ -26,7 +26,9 @@
  *          1.把关闭窗口的操作放在全部文件上传完uploadFinished事件中，再进行关闭，就能解决1.7中的bug1
  *          2.增加配置：上传完关闭窗口的延迟，单个文件上传完是否移除进度条，以及延迟多少时间移除
  *          3.取消jpg图片压缩的配置，强制进行关闭（这个组件有bug）
- * 
+ *          4.已知BUG：如果使用复制粘贴文件和dnd拖拽功能，重新第二次打开粘贴或者拖拽，文件会重复进入队列，先强制1.9版本修复该功能，后面再查怎样修复
+ * 2.0版本说明：
+ *          增加一个回调，文件加入到队列之后的一个事件的回调
  * 基本用法，引入该js文件和依赖的loserStarSweetAlertUtils.js，以及相关的bootstrap3的js
  * 1.创建配置对象
  var fileOpt = {
@@ -45,6 +47,8 @@
         //全部文件上传完成后的回调方法，一般用于刷新界面之类的(多个文件在列表的情况下，点击单个文件上传也会触发。点击全部上传的话，要全部上传完成才会触发一次)
         uploadFinishedCallback:uploadFinishedCallback,
         //附件类型集合（如果该参数有值，则该组件则可拥有一个附件类型选择的下拉框，并且上传的url会自动添加上file_type参数）
+        //文件加入到队列之后的一个事件的回调
+        fileQueuedCallback:fileQueuedCallback,
         fileTypeList:[{name:"公共文件",value:"common"},{name:"其它文件",value:"other"}],
         //允许上传的文件后缀，不配置该项则所有类型可上传
         suffix:["jpg","png"],
@@ -104,12 +108,15 @@ loserStarFileUploadBootstrapWindow_WebUploader.prototype = {
         this.uploadSuccessCallback = opt.uploadSuccessCallback;//上传成功时候的回调（两个参数，file 文件信息, response 服务器响应信息）
         this.uploadAcceptCallback = opt.uploadAcceptCallback;//上传时候校验的回调（此方法接收两个参数（object 文件一些相关信息, ret 服务端返回的数据），且必须有返回值，返回false则会触发uploadError事件,代表不能继续上传；返回true，则继续执行上传；不传入该方法，则默认返回true）
         this.uploadFinishedCallback = opt.uploadFinishedCallback;//上传完成的回调
+        this.fileQueuedCallback = opt.fileQueuedCallback;//当文件被加入队列时候触发的回调
         this.title = opt.title ? opt.title : "";//标题
         this.suffix = opt.suffix ? opt.suffix : [];//可上传的后缀
         this.isMakeThumb = (opt.isMakeThumb != undefined && opt.isMakeThumb != null) ? opt.isMakeThumb : true;//是否创建缩略图,默认创建
         this.autoUpload = (opt.autoUpload != undefined && opt.autoUpload != null) ? opt.autoUpload : false;//选完图片是否自动上传，默认关闭
-        this.dnd = (opt.dnd != undefined && opt.dnd != null) ? opt.dnd : true;//是否开启拖拽上传Drag And Drop，默认开启
-        this.paste = (opt.paste != undefined && opt.paste != null) ? opt.paste : true;//是否开启粘贴上传，默认开启
+        // this.dnd = (opt.dnd != undefined && opt.dnd != null) ? opt.dnd : true;//是否开启拖拽上传Drag And Drop，默认开启
+        // this.paste = (opt.paste != undefined && opt.paste != null) ? opt.paste : true;//是否开启粘贴上传，默认开启
+        this.dnd = false;//是否开启拖拽上传Drag And Drop，默认开启
+        this.paste = false;//是否开启粘贴上传，默认开启
         this.btnName = opt.btnName ? opt.btnName : "选择文件";//上传按钮的名称，默认为上传附件
         this.multiple = (opt.multiple != undefined && opt.multiple != null) ? opt.multiple : true;//是否允许选择多个文件，默认为多个文件
         this.fileVal = opt.fileVal ? opt.fileVal : "file";// [默认值：'file'] 设置文件上传域的name。
@@ -313,6 +320,10 @@ loserStarFileUploadBootstrapWindow_WebUploader.prototype = {
                     var file_id = $(btnSelf).attr("file_id");//取出文件id
                     self.uploader.upload(file_id);//开始上传
                 });
+
+                if (self.fileQueuedCallback){
+                    self.fileQueuedCallback(file);
+                }
             });
 
             //当一批文件添加进队列以后触发。

@@ -26,6 +26,7 @@
  *          1.把关闭窗口的操作放在全部文件上传完uploadFinished事件中，再进行关闭，就能解决1.7中的bug1
  *          2.增加配置：上传完关闭窗口的延迟，单个文件上传完是否移除进度条，以及延迟多少时间移除
  *          3.取消jpg图片压缩的配置，强制进行关闭（这个组件有bug）
+ *          4.已知BUG：如果使用复制粘贴文件和dnd拖拽功能，重新第二次打开粘贴或者拖拽，文件会重复进入队列，先强制1.9版本修复该功能，后面再查怎样修复
  * 
  * 基本用法，引入该js文件和依赖的loserStarSweetAlertUtils.js，以及相关的bootstrap3的js
  * 1.创建配置对象
@@ -108,8 +109,10 @@ loserStarFileUploadBootstrapWindow_WebUploader.prototype = {
         this.suffix = opt.suffix ? opt.suffix : [];//可上传的后缀
         this.isMakeThumb = (opt.isMakeThumb != undefined && opt.isMakeThumb != null) ? opt.isMakeThumb : true;//是否创建缩略图,默认创建
         this.autoUpload = (opt.autoUpload != undefined && opt.autoUpload != null) ? opt.autoUpload : false;//选完图片是否自动上传，默认关闭
-        this.dnd = (opt.dnd != undefined && opt.dnd != null) ? opt.dnd : true;//是否开启拖拽上传Drag And Drop，默认开启
-        this.paste = (opt.paste != undefined && opt.paste != null) ? opt.paste : true;//是否开启粘贴上传，默认开启
+        // this.dnd = (opt.dnd != undefined && opt.dnd != null) ? opt.dnd : true;//是否开启拖拽上传Drag And Drop，默认开启
+        // this.paste = (opt.paste != undefined && opt.paste != null) ? opt.paste : true;//是否开启粘贴上传，默认开启
+        this.dnd = false;//是否开启拖拽上传Drag And Drop，默认开启
+        this.paste = false;//是否开启粘贴上传，默认开启
         this.btnName = opt.btnName ? opt.btnName : "选择文件";//上传按钮的名称，默认为上传附件
         this.multiple = (opt.multiple != undefined && opt.multiple != null) ? opt.multiple : true;//是否允许选择多个文件，默认为多个文件
         this.fileVal = opt.fileVal ? opt.fileVal : "file";// [默认值：'file'] 设置文件上传域的name。
