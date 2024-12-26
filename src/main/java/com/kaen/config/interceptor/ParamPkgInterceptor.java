@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
+import com.loserstar.utils.Watermark.LoserStarSvgWatermarkGenerator;
 import org.apache.log4j.Logger;
 
 import com.jfinal.aop.Interceptor;
@@ -14,7 +15,6 @@ import com.jfinal.kit.PropKit;
 import com.kaen.controller.BaseController;
 import com.kaen.controller.pc.PcBaseController;
 import com.kaen.controller.weiApp.WeiAppBaseController;
-import com.kaen.service.user.UserService;
 
 /**
  * 参数封装拦截器
@@ -22,15 +22,21 @@ import com.kaen.service.user.UserService;
 public class ParamPkgInterceptor implements Interceptor {
 	
 	private static Logger log = Logger.getLogger(ParamPkgInterceptor.class);
-	private UserService userService = UserService.ins();
 	@Override
 	public void intercept(Invocation ai) {
 		BaseController controller = (BaseController) ai.getController();
 		String action = ai.getControllerKey();
 		String methodName = ai.getMethodName(); 
 		System.out.println("---------------拦截器："+action+"/"+methodName);
-		controller.setAttr("staticDirAutoTime", PropKit.getBoolean("staticDirAutoTime"));
-		controller.setAttr("staticDir", PropKit.get("staticDir"));
+		controller.setAttr("staticDirAutoTime", PropKit.getBoolean("staticDirAutoTime"));//是否开启静态资源自动刷新
+		controller.setAttr("staticDir", PropKit.get("staticDir"));//静态资源路径
+		try {
+			if (PropKit.getBoolean("isWarterMark")){
+				controller.setAttr("warterMark", LoserStarSvgWatermarkGenerator.genWateMarkToWebImageBase64("loserStar_Jfinal2"));
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 //		Object userid = controller.getRequest().getSession().getAttribute("userid");//原生session
 		//自定义session
 		Object userVo = null;

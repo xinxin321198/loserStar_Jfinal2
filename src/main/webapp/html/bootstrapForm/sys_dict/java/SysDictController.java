@@ -7,7 +7,7 @@
 @Controller(controllerKey = "/sysDict")
 public class SysDictController extends PcBaseController {
 	
-	private SysDictDao sysDictDao = new SysDictDao(DsConstans.dataSourceName.local);
+	private SysDictDao sysDictDao = new SysDictDao(DsConstans.dataSourceName.myql);
 
 	/**
 	 * 列表页面
@@ -44,61 +44,77 @@ public class SysDictController extends PcBaseController {
             String update_user_code = getPara("update_user_code");
             String update_user_name = getPara("update_user_name");
 			//排序字段
-			String sort_filed = getPara("sort_filed");
-			String sort_type = getPara("sort_type");
+			//String sort_filed = getPara("sort_filed");
+			//String sort_type = getPara("sort_type");
 			
 			WhereHelper whereHelper = new WhereHelper();
+			List<Object> queryParamList = new ArrayList<Object>();
             if (checkNull(dict_id)) {
-				whereHelper.addStrWhere("and dict_id like '%"+dict_id+"%'");
+				whereHelper.addStrWhere("and dict_id like ?");
+				queryParamList.add("%"+dict_id+"%");
 			}
             if (checkNull(dict_value)) {
-				whereHelper.addStrWhere("and dict_value like '%"+dict_value+"%'");
+				whereHelper.addStrWhere("and dict_value like ?");
+				queryParamList.add("%"+dict_value+"%");
 			}
             if (checkNull(dict_name)) {
-				whereHelper.addStrWhere("and dict_name like '%"+dict_name+"%'");
+				whereHelper.addStrWhere("and dict_name like ?");
+				queryParamList.add("%"+dict_name+"%");
 			}
             if (checkNull(dict_type)) {
-				whereHelper.addStrWhere("and dict_type like '%"+dict_type+"%'");
+				whereHelper.addStrWhere("and dict_type like ?");
+				queryParamList.add("%"+dict_type+"%");
 			}
             if (checkNull(dict_remarks)) {
-				whereHelper.addStrWhere("and dict_remarks like '%"+dict_remarks+"%'");
+				whereHelper.addStrWhere("and dict_remarks like ?");
+				queryParamList.add("%"+dict_remarks+"%");
 			}
             if (checkNull(dict_c_name)) {
-				whereHelper.addStrWhere("and dict_c_name like '%"+dict_c_name+"%'");
+				whereHelper.addStrWhere("and dict_c_name like ?");
+				queryParamList.add("%"+dict_c_name+"%");
 			}
             if (checkNull(dict_css_style)) {
-				whereHelper.addStrWhere("and dict_css_style like '%"+dict_css_style+"%'");
+				whereHelper.addStrWhere("and dict_css_style like ?");
+				queryParamList.add("%"+dict_css_style+"%");
 			}
             if (checkNull(dict_sort)) {
-				whereHelper.addStrWhere("and dict_sort like '%"+dict_sort+"%'");
+				whereHelper.addStrWhere("and dict_sort like ?");
+				queryParamList.add("%"+dict_sort+"%");
 			}
             if (checkNull(del)) {
-				whereHelper.addStrWhere("and del like '%"+del+"%'");
+				whereHelper.addStrWhere("and del like ?");
+				queryParamList.add("%"+del+"%");
 			}
             if (checkNull(create_time)) {
-				whereHelper.addStrWhere("and create_time like '%"+create_time+"%'");
+				whereHelper.addStrWhere("and create_time like ?");
+				queryParamList.add("%"+create_time+"%");
 			}
             if (checkNull(create_user_code)) {
-				whereHelper.addStrWhere("and create_user_code like '%"+create_user_code+"%'");
+				whereHelper.addStrWhere("and create_user_code like ?");
+				queryParamList.add("%"+create_user_code+"%");
 			}
             if (checkNull(create_user_name)) {
-				whereHelper.addStrWhere("and create_user_name like '%"+create_user_name+"%'");
+				whereHelper.addStrWhere("and create_user_name like ?");
+				queryParamList.add("%"+create_user_name+"%");
 			}
             if (checkNull(update_time)) {
-				whereHelper.addStrWhere("and update_time like '%"+update_time+"%'");
+				whereHelper.addStrWhere("and update_time like ?");
+				queryParamList.add("%"+update_time+"%");
 			}
             if (checkNull(update_user_code)) {
-				whereHelper.addStrWhere("and update_user_code like '%"+update_user_code+"%'");
+				whereHelper.addStrWhere("and update_user_code like ?");
+				queryParamList.add("%"+update_user_code+"%");
 			}
             if (checkNull(update_user_name)) {
-				whereHelper.addStrWhere("and update_user_name like '%"+update_user_name+"%'");
+				whereHelper.addStrWhere("and update_user_name like ?");
+				queryParamList.add("%"+update_user_name+"%");
 			}
 			//排序
-			if (checkNull(sort_filed)) {
-				whereHelper.addStrOrder("order by "+getSortField(sort_filed)+" "+sort_type);
-			}
-			whereHelper.addStrWhere("and CREATE_USER_CODE='"+getUserId()+"'");
-			Page<SysDict> dataPage =  sysDictDao.getListPage(getPageNumber(), getPageSize(), whereHelper, SysDict.class, null);
+			//if (checkNull(sort_filed)) {
+				//whereHelper.addStrOrder("order by "+getSortField(sort_filed)+" "+sort_type);
+				//whereHelper.addStrOrder("order by sort asc");
+			//}
+			Page<SysDict> dataPage =  sysDictDao.getListPage(getPageNumber(), getPageSize(), whereHelper, SysDict.class, queryParamList.toArray());
 			result.ok("获取数据成功");
 			result.setData(dataPage);
 		} catch (Exception e) {
@@ -130,60 +146,76 @@ public class SysDictController extends PcBaseController {
             String update_user_code = getPara("update_user_code");
             String update_user_name = getPara("update_user_name");
 			//排序字段
-			String sort_filed = getPara("sort_filed");
-			String sort_type = getPara("sort_type");
-			
+			//String sort_filed = getPara("sort_filed");
+			//String sort_type = getPara("sort_type");
 			WhereHelper whereHelper = new WhereHelper();
+			List<Object> queryParamList = new ArrayList<Object>();
             if (checkNull(dict_id)) {
-				whereHelper.addStrWhere("and dict_id like '%"+dict_id+"%'");
+				whereHelper.addStrWhere("and dict_id like ?");
+				queryParamList.add("%"+dict_id+"%");
 			}
             if (checkNull(dict_value)) {
-				whereHelper.addStrWhere("and dict_value like '%"+dict_value+"%'");
+				whereHelper.addStrWhere("and dict_value like ?");
+				queryParamList.add("%"+dict_value+"%");
 			}
             if (checkNull(dict_name)) {
-				whereHelper.addStrWhere("and dict_name like '%"+dict_name+"%'");
+				whereHelper.addStrWhere("and dict_name like ?");
+				queryParamList.add("%"+dict_name+"%");
 			}
             if (checkNull(dict_type)) {
-				whereHelper.addStrWhere("and dict_type like '%"+dict_type+"%'");
+				whereHelper.addStrWhere("and dict_type like ?");
+				queryParamList.add("%"+dict_type+"%");
 			}
             if (checkNull(dict_remarks)) {
-				whereHelper.addStrWhere("and dict_remarks like '%"+dict_remarks+"%'");
+				whereHelper.addStrWhere("and dict_remarks like ?");
+				queryParamList.add("%"+dict_remarks+"%");
 			}
             if (checkNull(dict_c_name)) {
-				whereHelper.addStrWhere("and dict_c_name like '%"+dict_c_name+"%'");
+				whereHelper.addStrWhere("and dict_c_name like ?");
+				queryParamList.add("%"+dict_c_name+"%");
 			}
             if (checkNull(dict_css_style)) {
-				whereHelper.addStrWhere("and dict_css_style like '%"+dict_css_style+"%'");
+				whereHelper.addStrWhere("and dict_css_style like ?");
+				queryParamList.add("%"+dict_css_style+"%");
 			}
             if (checkNull(dict_sort)) {
-				whereHelper.addStrWhere("and dict_sort like '%"+dict_sort+"%'");
+				whereHelper.addStrWhere("and dict_sort like ?");
+				queryParamList.add("%"+dict_sort+"%");
 			}
             if (checkNull(del)) {
-				whereHelper.addStrWhere("and del like '%"+del+"%'");
+				whereHelper.addStrWhere("and del like ?");
+				queryParamList.add("%"+del+"%");
 			}
             if (checkNull(create_time)) {
-				whereHelper.addStrWhere("and create_time like '%"+create_time+"%'");
+				whereHelper.addStrWhere("and create_time like ?");
+				queryParamList.add("%"+create_time+"%");
 			}
             if (checkNull(create_user_code)) {
-				whereHelper.addStrWhere("and create_user_code like '%"+create_user_code+"%'");
+				whereHelper.addStrWhere("and create_user_code like ?");
+				queryParamList.add("%"+create_user_code+"%");
 			}
             if (checkNull(create_user_name)) {
-				whereHelper.addStrWhere("and create_user_name like '%"+create_user_name+"%'");
+				whereHelper.addStrWhere("and create_user_name like ?");
+				queryParamList.add("%"+create_user_name+"%");
 			}
             if (checkNull(update_time)) {
-				whereHelper.addStrWhere("and update_time like '%"+update_time+"%'");
+				whereHelper.addStrWhere("and update_time like ?");
+				queryParamList.add("%"+update_time+"%");
 			}
             if (checkNull(update_user_code)) {
-				whereHelper.addStrWhere("and update_user_code like '%"+update_user_code+"%'");
+				whereHelper.addStrWhere("and update_user_code like ?");
+				queryParamList.add("%"+update_user_code+"%");
 			}
             if (checkNull(update_user_name)) {
-				whereHelper.addStrWhere("and update_user_name like '%"+update_user_name+"%'");
+				whereHelper.addStrWhere("and update_user_name like ?");
+				queryParamList.add("%"+update_user_name+"%");
 			}
 			//排序
-			if (checkNull(sort_filed)) {
-				whereHelper.addStrOrder("order by "+getSortField(sort_filed)+" "+sort_type);
-			}
-			List<SysDict> listData =  sysDictDao.getList(whereHelper, SysDict.class, null);
+			//if (checkNull(sort_filed)) {
+				//whereHelper.addStrOrder("order by "+getSortField(sort_filed)+" "+sort_type);
+			//}
+			whereHelper.addStrOrder("order by sort asc");
+			List<SysDict> listData =  sysDictDao.getList(whereHelper, SysDict.class, queryParamList.toArray());
 			result.ok("获取数据成功");
 			result.setData(listData);
 		} catch (Exception e) {

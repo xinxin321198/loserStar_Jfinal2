@@ -7,6 +7,7 @@ import java.util.Set;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Record;
 import com.kaen.controller.BaseController;
+import com.kaen.entity.SysUser;
 
 /**
  * pc端基类，继承此类的controller的请求，都需先登录，即seesion中存在userid的值
@@ -29,11 +30,14 @@ public class PcBaseController extends BaseController {
 //		} else {
 //			userid = (String) getRequest().getSession().getAttribute("userid");
 //		}
-		String useridStr = null;
 //		String sessionId = getRequest().getRequestedSessionId();
-		Object userid = getLoserStarSession().getAttr("userid");
-		if (userid!=null) {
-			useridStr = userid.toString();
+
+		String useridStr = null;
+		SysUser sysUser = null;;
+		Object userVo = getLoserStarSession().getAttr("userVo");
+		if (userVo!=null) {
+			sysUser = (SysUser) userVo;
+			useridStr = sysUser.getId();
 		}
 		return useridStr;
 	}

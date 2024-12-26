@@ -19,6 +19,7 @@ import com.kaen.config.redner.MyFileRender;
 import com.kaen.config.session.LoserStarSession;
 import com.kaen.config.session.LoserStarSessionManager;
 import com.kaen.constants.DsConstans;
+import com.kaen.entity.SysUser;
 import com.kaen.entity.vo.common.UserVo;
 import com.loserstar.utils.ObjectMapConvert.LoserStarObjMapConvertUtil;
 import com.loserstar.utils.cookie.CookieUtils;
@@ -373,11 +374,11 @@ public abstract class BaseController extends Controller {
 	
 	/**
 	 * 设置用户登录状态
-	 * @param userid
+	 * @param sysUser
 	 * @throws Exception 
 	 */
-	public void setLogin(UserVo userVo) throws Exception {
-		getLoserStarSession().setAttr("userVo", userVo);
+	public void setLogin(SysUser sysUser) throws Exception {
+		getLoserStarSession().setAttr("userVo", sysUser);
 	}
 	
 	public void delLogin() throws Exception {

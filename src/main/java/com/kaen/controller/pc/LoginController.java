@@ -10,8 +10,11 @@ package com.kaen.controller.pc;
 import com.jfinal.core.Path;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.PropKit;
+import com.kaen.constants.DsConstans;
+import com.kaen.constants.SessionKeyConstants;
+import com.kaen.dao.SysUserDao;
+import com.kaen.entity.SysUser;
 import com.kaen.entity.vo.common.UserVo;
-import com.kaen.service.user.UserService;
 import com.kaen.sms.service.YnzyZpSmsService;
 import com.loserstar.utils.checkCode.LoserStarCheckCodeUtils;
 import com.loserstar.utils.date.LoserStarDateUtils;
@@ -28,8 +31,17 @@ import java.util.Date;
  */
 @Path(value="/login")
 public class LoginController extends PcBaseController {
-	private UserService userService = UserService.ins();
+	/**
+	 * 密码输出次数过多后锁定时间
+	 */
+	public static final long login_banTime = PropKit.getLong("login.banTime");
+	/**
+	 * 最大允许密码输入错误次数
+	 */
+	public static final int login_pwdErrorMaxCount= PropKit.getInt("login.pwdErrorMaxCount");
+
 	private YnzyZpSmsService ynzyZpSmsService = YnzyZpSmsService.ins();
+	private SysUserDao sysUserDao = new SysUserDao(DsConstans.dataSourceName.myql);
 	/**
 	 * 登录页面
 	 */
@@ -65,67 +77,78 @@ public class LoginController extends PcBaseController {
 		}
 		renderNull();
 	}
-	
+
 	/**
 	 * 登录
 	 */
 	public void login() {
-		int maxPwdErrorCount = 3;
-		String userid = getPara("userid");
-		String password = getPara("password");
+		VResult result = new VResult();
+		String pwdErrStr = "用户名或密码错误，如忘记密码请点击“找回密码”进行密码重置！";
 		try {
-			if (!checkNull(userid)) {
-				throw new Exception("请填写账号");
+			String phone = getPara("phone");
+			if (!checkNull(phone)) {
+				throw new Exception("请填写手机号");
 			}
-			if (!checkNull(password)) {
+			String pwd = getPara("pwd");
+			if (!checkNull(pwd)) {
 				throw new Exception("请填写密码");
 			}
-			String check_code = getPara("check_code");
-			if (!checkNull(check_code)) {
+			String checkCode = getPara("checkCode");
+			if (!checkNull(checkCode)) {
 				throw new Exception("请填写验证码");
 			}
-			String sessionCheckCode = toString(getLoserStarSession().getAttr("loginCheckCode"));
+			String sessionCheckCode = getLoserStarSession().getAttr(SessionKeyConstants.loginCheckCode);
 			if (!checkNull(sessionCheckCode)) {
 				throw new Exception("尚未生成验证码");
 			}
-			if (!check_code.toUpperCase().equals(sessionCheckCode.toUpperCase())) {
+			if (!checkCode.toUpperCase().equals(sessionCheckCode.toUpperCase())) {
 				throw new Exception("验证码错误,请重新输入");
 			}
-			
-			UserVo userVo = userService.getUserVo(userid,PropKit.get("year"));
-			if (userVo==null) {
-				throw new Exception("该手机号用户在"+PropKit.get("year")+"年度还尚未注册过账户！请先注册后再登录");
+
+			SysUser sysUser = sysUserDao.getById(phone, SysUser.class);
+			if (sysUser==null) {
+				throw new Exception("用户名或密码错误");
 			}
-			String dbPwd = userVo.getPwd1();//DB查出来的用户密码
-			int pwdErrCount = userVo.getPwdErrCount();//DB查出来的用户密码错误次数
-			if (pwdErrCount>=maxPwdErrorCount) {
-				throw new Exception("密码输入错误次数超过"+maxPwdErrorCount+"次，该账号已锁定"); 
+			if(sysUser.getPwdErrCount()>=login_pwdErrorMaxCount) {
+				throw new Exception("对不起，密码输入次数过多，该账号已被锁定"+(login_banTime/1000/60)+"分钟，可请通过找回密码立即解锁！");
 			}
-			if (!userService.getMd5Pwd(PropKit.get("year"), userid, password).equals(dbPwd)&&false) {
+			String dbPwd = sysUser.getPassword();// DB查出来的用户密码
+			int pwdErrCount = sysUser.getPwdErrCount();//DB查出来的用户密码错误次数
+
+//			if (!userService.getMd5Pwd("loserStar", pwd).equals(dbPwd)) {
+			if (!(pwd).equals(dbPwd)) {
 				pwdErrCount++;//密码错误，错误次数+1，并保存在数据库中
-				if (pwdErrCount>=maxPwdErrorCount) {
-					throw new Exception("密码输入错误次数超过"+maxPwdErrorCount+"次，该账号已锁定"); 
+				sysUser.setPwdErrCount(pwdErrCount);
+				sysUser.setLockBeginDate(new Date());
+				sysUserDao.update(sysUser);
+				if (pwdErrCount>=login_pwdErrorMaxCount) {
+					if ((System.currentTimeMillis()-sysUser.getLockBeginDate().getTime())>0){
+						throw new Exception("对不起，密码输入次数过多，该账号已被锁定"+(login_banTime/1000/60)+"分钟，账号将在"+LoserStarDateUtils.format(new Date(sysUser.getLockBeginDate().getTime()+login_banTime))+"后解锁，可请通过找回密码立即解锁！");
+					}
 				}else {
-					throw new Exception("密码错误！还剩"+(maxPwdErrorCount-pwdErrCount)+"次机会");
+					throw new Exception("密码错误！还剩"+(login_pwdErrorMaxCount-pwdErrCount)+"次机会");
 				}
 			}
 			pwdErrCount=0;//如果登录成功，错误次数清零，并更新数据库
-			userService.updateUserVo(userVo);
+			sysUser.setPwdErrCount(pwdErrCount);
+			sysUserDao.update(sysUser);
 			//-----------redis seesion-begin
-			setLogin(userVo);
+			setLogin(sysUser);
 			//-----------redis seesion-end
-			redirect("/index/index.do");//登录成功，重定向到首页
+			result.ok("登录成功");
 		} catch (Exception e) {
 			e.printStackTrace();
-			setAttr("error", e.getMessage());
+			result.error(e.getMessage());
+			// 登录失败时，重新刷新验证码
+			String code = LoserStarCheckCodeUtils.genCheckCode(4);
 			try {
-				refreshCheckCode();//刷新验证码
+				getLoserStarSession().setAttr(SessionKeyConstants.loginCheckCode, code);
 			} catch (Exception e1) {
 				e1.printStackTrace();
-				setAttr("error", e.getMessage()+" "+e1.getMessage());
+				result.error(e1.getMessage());
 			}
-			renderFreeMarker("/login.html");//登录失败，重新渲染登录页
 		}
+		renderJson(result);
 	}
 	
 	/**
@@ -174,8 +197,8 @@ public class LoginController extends PcBaseController {
 			if (phone==null||phone.equals("")) {
 				throw new Exception("请输入手机号");
 			}
-			UserVo userVo = userService.getUserVo(phone, PropKit.get("year"));
-			if (userVo!=null) {
+			SysUser sysUser = sysUserDao.getById(phone, SysUser.class);
+			if (sysUser!=null) {
 				throw new Exception("对不起，该手机号已注册过用户，请更换手机号或者通过“忘记密码”找回您的密码！");
 			}
 			String code = LoserStarCheckCodeUtils.genCheckCode(4);
@@ -241,21 +264,16 @@ public class LoginController extends PcBaseController {
 				throw new Exception("验证码错误");
 			}
 			
-			UserVo userVoOld = userService.getUserVo(userVo.getPhone(), PropKit.get("year"));
+			SysUser userVoOld = sysUserDao.getById(userVo.getPhone(), SysUser.class);
 			if (userVoOld!=null) {
 				throw new Exception("对不起，该手机号已注册过用户，请更换手机号或者通过“忘记密码”找回您的密码！");
 			}
 			String year = String.valueOf(LoserStarDateUtils.getYear(new Date()));
-			UserVo saveUserVo = new UserVo();
-			saveUserVo.setNumber(year+"_"+userVo.getPhone());
-			saveUserVo.setPhone(userVo.getPhone());
-			saveUserVo.setPwd1(userService.getMd5Pwd(year, userVo.getPhone(), userVo.getPwd1()));//加盐加密
-			saveUserVo.setFullName(userVo.getFullName());
-			saveUserVo.setYear(toString(LoserStarDateUtils.getYear(new Date())));
-			saveUserVo.setIdCard(userVo.getIdCard());
-			saveUserVo.setBirthday(userVo.getBirthday());
-			saveUserVo.setSex(userVo.getSex());
-			saveUserVo.setEducation(userVo.getEducation());
+			SysUser saveUserVo = new SysUser();
+			saveUserVo.setId(userVo.getPhone());
+			saveUserVo.setUserName(userVo.getFullName());
+			saveUserVo.setPassword(userVo.getPwd1());
+			saveUserVo.setPwdErrCount(0);
 			System.out.println(LoserStarJsonUtil.toJson(saveUserVo));
 			boolean flag =  true;
 			if (!flag) {

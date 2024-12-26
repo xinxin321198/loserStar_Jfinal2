@@ -5,21 +5,21 @@ var formPageEvent = {}
  */
 formPageEvent.save = function () {
     var saveData = {};
-    saveData.id = $("#id").val();
-    saveData.name = $("#name").val();
-    saveData.path = $("#path").val();
-    saveData.upload_time = $("#upload_time").val();
-    saveData.sort = $("#sort").val();
-    saveData.del = $("#del").val();
-    saveData.create_time = $("#create_time").val();
-    saveData.create_user_code = $("#create_user_code").val();
-    saveData.create_user_name = $("#create_user_name").val();
-    saveData.update_time = $("#update_time").val();
-    saveData.update_user_code = $("#update_user_code").val();
-    saveData.update_user_name = $("#update_user_name").val();
-    saveData.suffix = $("#suffix").val();
-    saveData.from_id = $("#from_id").val();
-    saveData.from_table = $("#from_table").val();
+    saveData.id = $("#id").val();//主键id
+    saveData.name = $("#name").val();//名称
+    saveData.path = $("#path").val();//文件存储路径
+    saveData.upload_time = $("#upload_time").val();//上传日期
+    saveData.sort = $("#sort").val();//排序
+    saveData.del = $("#del").val();//软删除字段
+    saveData.create_time = $("#create_time").val();//创建时间
+    saveData.create_user_code = $("#create_user_code").val();//创建人编号
+    saveData.create_user_name = $("#create_user_name").val();//创建人姓名
+    saveData.update_time = $("#update_time").val();//更新时间
+    saveData.update_user_code = $("#update_user_code").val();//更新人编号
+    saveData.update_user_name = $("#update_user_name").val();//更新人姓名
+    saveData.suffix = $("#suffix").val();//文件后缀
+    saveData.from_id = $("#from_id").val();//附件所属记录id
+    saveData.from_table = $("#from_table").val();//附件所属记录的表
     //校验值
     if (!loserStarJsUtils.checkObj(saveData.id)){
         loserStarSweetAlertUtils.alertWarning("请填写“主键id”","",function(){});

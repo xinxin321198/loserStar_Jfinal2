@@ -11,7 +11,7 @@ loserStarDatatablesCfg.initDataTables = function (tableId) {
         // language: datatablesCfg.language,
         //使用配置文件的方式
         language: {
-            url: '../bower_components/DataTables-1.13.6/i18n/zh.json'
+            url: '../static/bower_components/DataTables-1.13.6/i18n/zh.json'
         },
         //初始化一个新的Datatables，如果已经存在，则销毁（配置和数据），成为一个全新的Datatables实例
         destroy: true,
@@ -38,7 +38,7 @@ loserStarDatatablesCfg.initDataTables = function (tableId) {
         //控制是否显示表格左下角的信息
         info: false,
         // 是否开启本地分页
-        paging: false,
+        paging: true,
         /**
          * 分页按钮显示选项
          *  numbers 只显示数字 （1.10.8版本）

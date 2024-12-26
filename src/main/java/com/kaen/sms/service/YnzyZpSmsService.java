@@ -2,10 +2,9 @@ package com.kaen.sms.service;
 
 import java.rmi.RemoteException;
 
-import com.kaen.service.user.UserService;
 
 /**
- * 云南中烟发送短信
+ * 云中发送短信
  */
 public class YnzyZpSmsService {
 	
@@ -16,7 +15,7 @@ public class YnzyZpSmsService {
 
 	public static YnzyZpSmsService ins() {
 		if (ynzyZpSmsService == null) {
-			synchronized (UserService.class) {
+			synchronized (YnzyZpSmsService.class) {
 				ynzyZpSmsService = new YnzyZpSmsService();
 			}
 		}

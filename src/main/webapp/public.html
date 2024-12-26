@@ -135,21 +135,24 @@
     <!-- AdminLTE for demo purposes -->
     <script src="${staticDir}dist/js/demo.js?dt=${jsdt}"></script>
     <!-- loserStar自己封装的一些东西 -->
+    <script src="${staticDir}js/loserStarDatatablesCfg.js?dt=${jsdt}"></script>
     <script src="${staticDir}js/ajaxUtils.js?dt=${jsdt}"></script>
     <script src="${staticDir}js/loserStarJsUtils.js?dt=${jsdt}"></script>
-    <script src="${staticDir}js/loserStarBoostrapUtils.js?dt=${jsdt}"></script>
+    <script src="${staticDir}js/loserStarBoostrapUtils.js?dt=1${jsdt}"></script>
     <script src="${staticDir}js/loserStarSweetAlertUtils.js?dt=${jsdt}"></script>
-    <script src="${staticDir}js/loserStarFileUploadBootstrapWindow_WebUploader1.2.js?dt=${jsdt}"></script>
+    <script src="${staticDir}js/loserStarFileUploadBootstrapWindow_WebUploader2.0.js?dt=${jsdt}"></script>
     <script src="${staticDir}js/loserStarTreeDataSelectBootstrapWindow1.0.js?dt=${jsdt}"></script>
     <script src="${staticDir}js/loserStarDataSelectBootstrapWindow1.1.js?dt=${jsdt}"></script>
+    <script src="${staticDir}js/loserStarPage1.2.js?dt=${jsdt}"></script>
 
     <script src="${staticDir}js/dict/dict.js?dt=${jsdt}"></script>
 
 
     <script>
-    $(function(){
+      $(function () {
         //全局设置select2的中文化
-        $.fn.select2.defaults.set('language', 'zh-CN');
+        $.fn.select2.defaults.set('language', 'zh-CN');//select2的中文化
+        $.fn.select2.defaults.set('allowClear', true);//select2可以清楚已选的数据
         //全局设置datepricker的中文化
         $.fn.datepicker.defaults.language = 'zh-CN';
         //全局设置jquery-datepricker的中文化
@@ -162,6 +165,8 @@
         float: left;
       }
     </style>
+    <!--  水印组件  -->
+    <@waterMak />
     <#nested>
   </head>
 </#macro>
@@ -569,4 +574,50 @@
     </div>
     <!-- ./wrapper -->
   </body>
+</#macro>
+
+
+<!-- 水印 -->
+<#macro waterMak>
+<style>
+  body::after {
+    content: '';
+    display: block;
+    position: fixed;
+    z-index: 9999999;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.2;
+    background: url('${warterMark}');
+    background-repeat: repeat;
+    background-size: 300px 150px;
+    transform: rotate(-0deg);
+  }
+
+  .sw {
+    margin-top: 10px;
+  }
+
+  .sw .toolbar {
+    width: 100%;
+    text-align: right;
+  }
+
+  .sw>.tab-content {
+    width: 100%;
+    height: auto !important;
+  }
+
+  .layout-top-nav .content-wrapper, .layout-top-nav .main-footer {
+    padding: 10px 20px;
+  }
+
+  .content-wrapper {
+    /* 65顶部， 23底部 117 APILogDev 40APILogDev panel margin*/
+    min-height: calc(100vh - 65px - 23.4219px <#if kdAPiLogDev>- 117.266px - 40px</#if>) !important;
+  }
+</style>
 </#macro>

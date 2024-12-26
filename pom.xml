@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>com.loserstar</groupId>
 			<artifactId>loserStarUtils</artifactId>
-			<version>8.6-1.8jdk</version>
+			<version>8.7-1.8jdk</version>
 		</dependency>
 		
 		

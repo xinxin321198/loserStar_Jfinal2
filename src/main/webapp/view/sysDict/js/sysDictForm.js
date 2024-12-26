@@ -56,4 +56,9 @@ function initControl(){
     $('.select2').select2({
         placeholder: '请选择'
     });
+    //初始化jquery-datetimepricker时间选择器
+    $('.jquery-datetimepricker').datetimepicker({
+        step: 1,
+        format: 'Y年m月d日 H时i分'
+    });
 }

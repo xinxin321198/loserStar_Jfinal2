@@ -108,5 +108,14 @@ public abstract class BaseSysUser<M extends BaseSysUser<M>> extends Model<M> imp
 		return getStr("update_user_name");
 	}
 
+	public M setLockBeginDate(java.util.Date lockBeginDate) {
+		set("lock_begin_date", lockBeginDate);
+		return (M)this;
+	}
+	
+	public java.util.Date getLockBeginDate() {
+		return getDate("lock_begin_date");
+	}
+
 }
 

@@ -3,82 +3,126 @@
 <!DOCTYPE html>
 <html>
 <@loserStarHeader title="后台登录">
-  <script>
+<script>
     $(function () {
-      $('input').iCheck({
-        checkboxClass: 'icheckbox_square-blue',
-        radioClass: 'iradio_square-blue',
-        increaseArea: '20%' /* optional */
-      });
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
     });
+    // 页面回车事件
+    $(document).keydown(function (event) {
+        if (event.keyCode == 13) {
+            document.getElementById("login").click();
+        }
+    });
+    //刷新验证码
     var refreshCheckCode = function () {
-      $("#loginCheckCodeImg").attr("src", "getLoginCheckCodeImg.do?dt=" + new Date().getTime());
+        $("#loginCheckCodeImg").attr("src", "getLoginCheckCodeImg.do?dt=" + new Date().getTime());
     }
-  </script>
+    var login = function (url) {
+        var data = {};
+        data.phone = $("#phone").val();
+        data.pwd = $("#pwd").val();
+        data.checkCode = $("#checkCode").val();
+        loserStarBoostrapUtils.loading("登录校验中...");
+        postObj(url, data, "json", function (result) {
+            loserStarBoostrapUtils.closeLoading();
+            if (result.flag) {
+                window.location.href = "../index/indexPage.do";
+            } else {
+                $("#loginErrorDiv").show();
+                $("#loginErrorSpan").text(result.msg);
+                refreshCheckCode();
+            }
+        });
+    }
+</script>
 </@loserStarHeader>
 
 <body class="hold-transition login-page layout-top-nav">
-  <div class="wrapper">
-    <div class="login-box">
-      <div class="login-logo">
-        <b>XXX</b>XXX
-      </div>
-      <!-- /.login-logo -->
-      <div class="login-box-body">
-        <p class="login-box-msg">输入账号密码进行登录</p>
-        <form action="login.do" method="post">
-          <div class="form-group has-feedback">
-            <input id="userid" name="userid" type="text" class="form-control" placeholder="用户名" value="15087010221">
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-          </div>
-          <div class="form-group has-feedback">
-            <input id="password" name="password" type="password" class="form-control" placeholder="密码" value="123">
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-          </div>
-          <img id="loginCheckCodeImg" src="getLoginCheckCodeImg.do" alt="验证码" onclick="refreshCheckCode()">
-          <div class="form-group has-feedback">
-            <input id="check_code" name="check_code" type="text" class="form-control" placeholder="验证码">
-            <span class="glyphicon glyphicon-barcode form-control-feedback"></span>
-          </div>
-          <div class="row">
-            <div class="col-xs-8">
-              <div class="checkbox icheck">
-                <label>
-                  <input type="checkbox"> 记住我
-                </label>
-              </div>
-            </div>
-            <!-- /.col -->
-            <div class="col-xs-4">
-              <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
-            </div>
-            <!-- /.col -->
-          </div>
-          <#if error??>
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="alert alert-danger alert-dismissible">
-                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                  <h4><i class="icon fa fa-ban"></i> 错误！</h4>
-                  ${error}
+<div class="wrapper">
+    <div class="login-box"  style="min-width: 500px;width: 30%;margin: auto;">
+        <div class="login-logo">
+            <b>loserStar</b>Jfinal2
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">输入账号密码进行登录</p>
+            <div class="form-group has-feedback">
+                <label for="phone" class="control-label">手机号<span class="text-red">*</span></label>
+                <div class="input-group" style="width: 100%;">
+                    <input id="phone" type="text" class="form-control" placeholder="手机号" value="loserStar"
+                           oninput="loserStarJsUtils.removeSpaces(event)" autocomplete="off">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
-              </div>
-              <!-- /.col -->
             </div>
-          </#if>
-        </form>
-        <!-- /.social-auth-links -->
-        <!--  <a href="#">我忘记了密码</a><br>  -->
-        <a href="../../AdminLTE-2.4.18/" target="_blank">本地开发示例2.4.18</a><br>
-        <a href="../../AdminLTE_CN-2.4.18/" target="_blank">本地中文示例2.4.18</a><br>
-        <a href="https://3vshej.cn/AdminLTE/" target="_blank">在线中文示例</a><br>
-        <a href="https://3vshej.cn/AdminLTE/AdminLTE-2.3.11/documentation/index.html" target="_blank">在线中文文档</a><br>
-      </div>
-      <!-- /.login-box-body -->
+            <div class="form-group has-feedback">
+                <label for="pwd" class="control-label">密码<span class="text-red">*</span></label>
+                <div class="input-group" style="width: 100%;">
+                    <input id="pwd" type="password" class="form-control" placeholder="密码" value="loserStar"
+                           autocomplete="new-password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                <div>
+                    <label for="checkCode" class="control-label">验证码（点击图片刷新）<span
+                            class="text-red">*</span></label>
+                    <div class="input-group" style="width: 100%;display: flex;">
+                        <div style="display: flex;height: 35px;align-items: center;border: 1px solid #ddd;padding: 0 10px;flex: 1;">
+                            <input id="checkCode" type="text" placeholder="验证码"
+                                   oninput="loserStarJsUtils.removeSpaces(event)"
+                                   autocomplete="off"
+                                   style="border: none;flex: 1;border-style: none;outline: none;">
+                            <span class="glyphicon glyphicon-barcode"></span>
+                        </div>
+                        <img id="loginCheckCodeImg" style="
+    height: 35px;
+    padding-left: 10px;
+" src="getLoginCheckCodeImg.do" alt="输入验证码" onclick="refreshCheckCode()">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" id="login" class="btn btn-primary btn-block" onclick="login('login.do')">
+                    登录
+                </button>
+            </div>
+            <div class="form-group" style="display: flex;flex-direction: row;">
+                <div class="checkbox icheck">
+                    <label>
+                        <input type="checkbox"> 记住我
+                    </label>
+                </div>
+                <a href="findPwdPage.do" target="_self">找回密码</a>
+                <a href="regnoticePage.do" style="padding-left: 20px;" target="_self">注册账号</a>
+            </div>
+            <div class="row">
+                <div id="loginErrorDiv" class="row" style="display: none;">
+                    <div class="col-sm-12">
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h4><i class="icon fa fa-ban"></i> 错误！</h4>
+                            <span id="loginErrorSpan"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.social-auth-links -->
+            <!--  <a href="#">我忘记了密码</a><br>  -->
+            <a href="../../AdminLTE-2.4.18/" target="_blank">本地开发示例2.4.18</a><br>
+            <a href="../../AdminLTE_CN-2.4.18/" target="_blank">本地中文示例2.4.18</a><br>
+            <a href="https://3vshej.cn/AdminLTE/" target="_blank">在线中文示例</a><br>
+            <a href="https://3vshej.cn/AdminLTE/AdminLTE-2.3.11/documentation/index.html"
+               target="_blank">在线中文文档</a><br>
+        </div>
+        <!-- /.login-box-body -->
     </div>
     <!-- /.login-box -->
-  </div>
-  <!-- /.wrapper -->
+</div>
+<!-- /.wrapper -->
 </body>
 <@loserStarFooter />
 </html>

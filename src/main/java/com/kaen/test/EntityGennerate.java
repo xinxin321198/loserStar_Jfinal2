@@ -52,25 +52,25 @@ public class EntityGennerate {
 	private static DBType dbtype = DBType.mysql;
 
 	// base model 所使用的包名
-	private static String baseModelPackageName = "com.loserstar.entity.base";
+	private static String baseModelPackageName = "com.kaen.entity.base";
 	// base model 文件保存路径
-	private static String baseModelOutputDir = PathKit.getWebRootPath() + "/../src/com/loserstar/entity/base";
+	private static String baseModelOutputDir = PathKit.getWebRootPath() + "/../java/com/kaen/entity/base";
 	// base model 生成时所使用的模板文件路径（如果为空则使用jfinal官方的原版模板）
 	private static String baseModelTemplate = "/codeGenTemplate/tableBaseModelTemplate.jf";
 	// model 所使用的包名 (MappingKit 默认使用的包名)
-	private static String modelPackageName = "com.loserstar.entity";
+	private static String modelPackageName = "com.kaen.entity";
 	// model 生成时所使用的模板文件（如果为空则使用jfinal官方的原版模板）
 	private static String modelTemplate = "/codeGenTemplate/tableModelTemplate.jf";
 
 	// 生成的dao文件的包名
-	private static String daoPakageName = "com.loserstar.dao";
+	private static String daoPakageName = "com.kaen.dao";
 	// dao文件的生成目录
-	private static String daoOutPath = PathKit.getWebRootPath() + File.separator + ".." + File.separator + "src" + File.separator + "com" + File.separator + "loserstar" + File.separator + "dao" + File.separator;
+	private static String daoOutPath = PathKit.getWebRootPath() +"/../java/com/kaen/dao/";
 
 	// 后端字典常量的包名
-	private static String dictConstantsPakageName = "com.loserstar.constants";
+	private static String dictConstantsPakageName = "com.kaen.constants";
 	// 后端字典常量生成路径
-	private static String dictConstantsOutPath = PathKit.getWebRootPath() + File.separator + ".." + File.separator + "src" + File.separator + "com" + File.separator + "loserstar" + File.separator + "constants" + File.separator;
+	private static String dictConstantsOutPath = PathKit.getWebRootPath() + "/../java/com/kaen/constants/";
 
 	// Jqwidgets所使用的表字段定义的js文件
 	private static String tableFieldOutPath = PathKit.getWebRootPath() + File.separator + "static/js" + File.separator + "tableField" + File.separator;
@@ -89,15 +89,15 @@ public class EntityGennerate {
 
 	private static String[] gennerateTableNames_local = {
 			// 这里的代码要不按数据库显示顺序排序，调整一次太费力了
-			"ynzy_zp.sys_dict",
-			"ynzy_zp.sys_user",
-			"ynzy_zp.sys_file",
+			"loserstar.sys_dict",
+			"loserstar.sys_user",
+			"loserstar.sys_file",
 			};
 
 	/**
 	 * 生成jqwidgets使用的前端字段定义（通过反射生成，需要类的全包路径）
 	 */
-	private static String[] gennerateVoNames = { "com.loserstar.entity.vo.TestVo" };
+	private static String[] gennerateVoNames = { "com.kaen.entity.vo.TestVo" };
 
 
 	/**
@@ -110,8 +110,8 @@ public class EntityGennerate {
 				genDao(dataSource,DsConstans.dataSourceName.myql,gennerateTableNames_local,daoPakageName,daoOutPath);
 //				genJqwidgetsTableField(dataSource,DsConstans.dataSourceName.gbgl,gennerateTableNames_local,"loserstar",tableFieldOutPath);
 //				
-				genConstants(DsConstans.dataSourceName.myql,dictConstantsPakageName,dictConstantsOutPath,"ynzy_zp.sys_dict","dict_type");
-				genDictJs(DsConstans.dataSourceName.myql,dictJsOutPath,"ynzy_zp.sys_dict","dict_type");
+				genConstants(DsConstans.dataSourceName.myql,dictConstantsPakageName,dictConstantsOutPath,"loserstar.sys_dict","dict_type");
+				genDictJs(DsConstans.dataSourceName.myql,dictJsOutPath,"loserstar.sys_dict","dict_type");
 //				genVoField(voFieldJsOutPath);
 				genBootstrapFormHtml(dataSource, DsConstans.dataSourceName.myql, gennerateTableNames_local, bootstrapFormHtmlOutPath);
 	}
@@ -435,11 +435,11 @@ public class EntityGennerate {
 				data.put("genDate", LoserStarDateUtils.format(new Date()));
 //				String genPath = "D:\\development\\keWorkSpace\\HtWearhouse\\src\\com\\kaen\\dao\\"+className+".java";
 				String genPath = daoOutPath+className+".java";
-				if (!new File(genPath).exists()) {
+//				if (!new File(genPath).exists()) {
 					String string = LoserStarFreemarkerUtil.runForFileSystem(LoserStarFreemarkerUtil.class.getResource("/codeGenTemplate").getPath(), "tableDaoTemp.ftl", data);
 					LoserStarFileUtil.WriteStringToFilePath(string,genPath , false);
 					System.out.println("生成dao:"+genPath);
-				}
+//				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

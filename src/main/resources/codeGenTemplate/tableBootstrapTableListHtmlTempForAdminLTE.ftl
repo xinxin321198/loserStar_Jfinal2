@@ -37,7 +37,7 @@ ${r'<@loserStarBody title="'}${tableRemarks}${r'" title2="'}${tableRemarks}${r'"
                         <form class="form-inline">
                         <#list fieldList as field>
                             <div class="form-group">
-                                <label for="org_id">${field.remarks}</label>
+                                <label for="${field.name}">${field.remarks}</label>
                                 <input id="${field.name}" type="text" class="form-control"  placeholder="${field.remarks}">
                             </div>
                         </#list>

@@ -4,7 +4,7 @@ package ${packgeName};
 import com.loserstar.utils.db.jfinal.base.imp.BaseDao;
 
 /**
- * 本文件代码生成器自动生成，本文件若已存在，则不会被覆盖，需要覆盖请删除本文件后重新生成
+ * 本文件代码生成器自动生成，代码生成器会覆盖该文件，如需扩展方法，请继承该类或者使用service进行扩展
  * author: autoGenerate
  * date: ${.now}
  * remarks:${tableRemarks}

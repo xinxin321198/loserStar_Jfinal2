@@ -28,6 +28,7 @@ function initData() {
             $("#update_time").val(data.update_time);
             $("#update_user_code").val(data.update_user_code);
             $("#update_user_name").val(data.update_user_name);
+            $("#lock_begin_date").val(data.lock_begin_date);
             initControl();//初始化控件
 
             //select控件赋值
@@ -51,5 +52,10 @@ function initControl(){
     //初始化高级下拉框select2:https://select2.github.io/
     $('.select2').select2({
         placeholder: '请选择'
+    });
+    //初始化jquery-datetimepricker时间选择器
+    $('.jquery-datetimepricker').datetimepicker({
+        step: 1,
+        format: 'Y年m月d日 H时i分'
     });
 }

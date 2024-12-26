@@ -30,25 +30,117 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+
+                    <!--查询条件字段---begin -->
+                    <div id="toolbar" class="btn-group">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="dict_id">主键</label>
+                                <input id="dict_id" type="text" class="form-control"  placeholder="主键">
+                            </div>
+                            <div class="form-group">
+                                <label for="dict_value">值</label>
+                                <input id="dict_value" type="text" class="form-control"  placeholder="值">
+                            </div>
+                            <div class="form-group">
+                                <label for="dict_name">名称</label>
+                                <input id="dict_name" type="text" class="form-control"  placeholder="名称">
+                            </div>
+                            <div class="form-group">
+                                <label for="dict_type">类型</label>
+                                <input id="dict_type" type="text" class="form-control"  placeholder="类型">
+                            </div>
+                            <div class="form-group">
+                                <label for="dict_remarks">备注</label>
+                                <input id="dict_remarks" type="text" class="form-control"  placeholder="备注">
+                            </div>
+                            <div class="form-group">
+                                <label for="dict_c_name">java后端使用的常量名称</label>
+                                <input id="dict_c_name" type="text" class="form-control"  placeholder="java后端使用的常量名称">
+                            </div>
+                            <div class="form-group">
+                                <label for="dict_css_style">前端附加的样式</label>
+                                <input id="dict_css_style" type="text" class="form-control"  placeholder="前端附加的样式">
+                            </div>
+                            <div class="form-group">
+                                <label for="dict_sort">排序码</label>
+                                <input id="dict_sort" type="text" class="form-control"  placeholder="排序码">
+                            </div>
+                            <div class="form-group">
+                                <label for="del">删除标志</label>
+                                <input id="del" type="text" class="form-control"  placeholder="删除标志">
+                            </div>
+                            <div class="form-group">
+                                <label for="create_time">创建时间</label>
+                                <input id="create_time" type="text" class="form-control"  placeholder="创建时间">
+                            </div>
+                            <div class="form-group">
+                                <label for="create_user_code">创建人编号</label>
+                                <input id="create_user_code" type="text" class="form-control"  placeholder="创建人编号">
+                            </div>
+                            <div class="form-group">
+                                <label for="create_user_name">创建人姓名</label>
+                                <input id="create_user_name" type="text" class="form-control"  placeholder="创建人姓名">
+                            </div>
+                            <div class="form-group">
+                                <label for="update_time">更新时间</label>
+                                <input id="update_time" type="text" class="form-control"  placeholder="更新时间">
+                            </div>
+                            <div class="form-group">
+                                <label for="update_user_code">更新人编号</label>
+                                <input id="update_user_code" type="text" class="form-control"  placeholder="更新人编号">
+                            </div>
+                            <div class="form-group">
+                                <label for="update_user_name">更新人姓名</label>
+                                <input id="update_user_name" type="text" class="form-control"  placeholder="更新人姓名">
+                            </div>
+                            <button id="search" class="btn btn-success" type="button" onclick="listPageEvent.queryList()">查询</button>
+                        </form>
+                    </div>
+                    <!--查询条件字段---begin -->
+
                     <!-- 树形列表的一些按钮，当然也可以放表格的按钮---begin -->
                     <div id="toolbar" class="btn-group">
-                                <button type="button" class="btn btn-primary" onclick="listPageEvent.addTopNode()">
-                                    <span class="glyphicon glyphicon-plus"></span>新增顶层节点
-                                </button>
-                                <button id="addSub" type="button" class="btn btn-primary" onclick="listPageEvent.addSubNode()" disabled>
-                                    <span class="glyphicon glyphicon-plus"></span>新增下级节点
-                                </button>
-                                <button type="button" class="btn bg-olive" onclick="listPageEvent.expandAll()">
-                                    <span class="fa fa-angle-double-down"></span>全部展开
-                                </button>
-                                <button type="button" class="btn bg-olive" onclick="listPageEvent.collapseAll()">
-                                    <span class="fa fa-angle-double-up"></span>全部收缩
-                                </button>
-                                <button type="button" class="btn btn-info" onclick="listPageEvent.refresh()">
-                                    <span class="glyphicon glyphicon-repeat"></span>刷新
-                                </button>
+                            <button type="button" class="btn btn-primary" onclick="listPageEvent.addTopNode()">
+                                <span class="glyphicon glyphicon-plus"></span>新增顶层节点
+                            </button>
+                            <button id="addSub" type="button" class="btn btn-primary" onclick="listPageEvent.addSubNode()" disabled>
+                                <span class="glyphicon glyphicon-plus"></span>新增下级节点
+                            </button>
+                            <button type="button" class="btn bg-olive" onclick="listPageEvent.expandAll()">
+                                <span class="fa fa-angle-double-down"></span>全部展开
+                            </button>
+                            <button type="button" class="btn bg-olive" onclick="listPageEvent.collapseAll()">
+                                <span class="fa fa-angle-double-up"></span>全部收缩
+                            </button>
+                            <button type="button" class="btn btn-info" onclick="listPageEvent.refresh()">
+                                <span class="glyphicon glyphicon-repeat"></span>刷新
+                            </button>
+                    </div>
+
+                    <div id="toolbar" class="btn-group">
+                            <button type="button" class="btn btn-primary" onclick="window.open('formPage.do', '_self');">
+                                <span class="glyphicon glyphicon-plus"></span>新增
+                            </button>
+                            <button id="addSub" type="button" class="btn btn-primary" onclick="listPageEvent.refresh()" disabled>
+                                <span class="glyphicon glyphicon-plus"></span>刷新
+                            </button>
+                            <button type="button" class="btn bg-olive" onclick="table.getCheckedRows();">
+                                <span class="fa fa-angle-double-down"></span>获取选中行的html数据
+                            </button>
+                            <button type="button" class="btn bg-olive" onclick="table.getChkedIds();">
+                                <span class="fa fa-angle-double-up"></span>获取选中行id
+                            </button>
+                            <button type="button" class="btn btn-info" onclick="table.getChkedDatas();">
+                                <span class="glyphicon glyphicon-repeat"></span>获取选中行的数据对象
+                            </button>
+                            <button type="button" class="btn btn-info" onclick="listPageEvent.exportExcel()">
+                                <span class="glyphicon glyphicon-repeat"></span>导出Excel
+                            </button>
                     </div>
                     <!-- 树形列表的一些按钮，当然也可以放表格的按钮---end -->
+
+
 
                     <!-- 这里放生成的html代码 -->
                     <!-- 本段代码为代码生成器根据表[sys_dict]结构自动生成的bootstrap的表格的html，犯懒时候从这里粘过去用----begin-->
@@ -61,6 +153,13 @@
                         </tfoot>
                     </table>
                     <!-- 本段代码为代码生成器根据表[sys_dict]结构自动生成的bootstrap的表格的html，犯懒时候从这里粘过去用----end-->
+                    <!-- 分页组件begin -->
+                    <div class="panle-footer">
+                        <div id="pageDiv">
+                        </div>
+                    </div>
+                    <!-- 分页组件end -->
+
                 </div>
                 <!-- /.box-body -->
             </div>

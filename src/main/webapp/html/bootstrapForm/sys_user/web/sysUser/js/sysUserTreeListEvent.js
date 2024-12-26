@@ -22,6 +22,7 @@ listPageEvent.queryList = function () {
         thead += "                                <th>更新时间</th>";
         thead += "                                <th>更新人编号</th>";
         thead += "                                <th>更新人姓名</th>";
+        thead += "                                <th>密码输入次数过多时被锁定的时间记录</th>";
         thead += "                                <th>操作</th>";
         thead += "                            </tr>";
 
@@ -42,6 +43,7 @@ listPageEvent.queryList = function () {
             text += "                            <td id=\"" + tmp.id + "_update_time\">" + tmp.update_time + "</td>";
             text += "                            <td id=\"" + tmp.id + "_update_user_code\">" + tmp.update_user_code + "</td>";
             text += "                            <td id=\"" + tmp.id + "_update_user_name\">" + tmp.update_user_name + "</td>";
+            text += "                            <td id=\"" + tmp.id + "_lock_begin_date\">" + tmp.lock_begin_date + "</td>";
             text += "                            <td>";
             text += "                            <div class=\"btn-group\">";
             text += "                            <button id=\""+ tmp.id + "_viewBtn\" type=\"button\" class=\"btn btn-success\" onclick=\"window.open('formPageView.do?id=" + tmp.id +"','_self')\">查看</button>";
@@ -78,8 +80,8 @@ listPageEvent.queryList = function () {
 
 
 /**
- * 初始化datatables，该方法得放在渲染html的dom数据之前，否则刷新数据会有问题
- * 具体配置参考 http://datatables.club/reference/option/
+ * 初始化树形表格，该方法得放在渲染html的dom数据之前，否则刷新数据会有问题
+ * 使用的jquery的一个插件 https://plugins.jquery.com/treetable  https://github.com/ludo/jquery-treetable
  */
 function initTreeTables() {
     table = $("#sys_user_table").treetable({
