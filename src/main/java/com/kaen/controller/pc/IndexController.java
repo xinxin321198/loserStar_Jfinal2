@@ -1,6 +1,6 @@
 package com.kaen.controller.pc;
 
-import com.kaen.config.annotation.Controller;
+import com.jfinal.core.Path;
 
 /**
  * 
@@ -8,7 +8,7 @@ import com.kaen.config.annotation.Controller;
  * date: 2023年12月19日上午9:57:22
  * remarks:公司简介
  */
-@Controller(controllerKey = "/index")
+@Path(value="/index")
 public class IndexController extends PcBaseController {
 
 	/**

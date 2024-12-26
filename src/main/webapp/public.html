@@ -1,6 +1,11 @@
 <#if !(jsdt??)>
-  <#--这是js和css等静态文件引用的时间戳变量，如需全部静态资源更新时间戳，则修改此文件的此变量；如果只更新某个页面上的静态资源时间戳，请到该页面上自己定义同名的变量-->
-    <#assign jsdt="202310311">
+<#--这是js和css等静态文件引用的时间戳变量，如需全部静态资源更新时间戳，则修改此文件的此变量；如果只更新某个页面上的静态资源时间戳，请到该页面上自己定义同名的变量-->
+<#assign jsdt="">
+  <#if staticDirAutoTime>
+  <#assign jsdt=.now?long>
+  <#else>
+  <#assign jsdt="20240429">
+  </#if>
 </#if>
 <!-- 页面head头标签-begin -->
 <#macro loserStarHeader title="页面标题">
@@ -12,133 +17,133 @@
     <!-- 告诉浏览器该页面是自适应布局 -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- jQuery 3 -->
-    <script src="../bower_components/jquery/dist/jquery.min.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/jquery/dist/jquery.min.js?dt=${jsdt}"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="../bower_components/jquery-ui/jquery-ui.min.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/jquery-ui/jquery-ui.min.js?dt=${jsdt}"></script>
     <!-- jQuery Knob Chart -->
-    <script src="../bower_components/jquery-knob/dist/jquery.knob.min.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/jquery-knob/dist/jquery.knob.min.js?dt=${jsdt}"></script>
     <!-- Slimscroll -->
-    <script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/jquery-slimscroll/jquery.slimscroll.min.js?dt=${jsdt}"></script>
 
     <!-- Bootstrap 3.3.7 -->
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js?dt=${jsdt}"></script>
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css?dt=${jsdt}">
+    <script src="${staticDir}bower_components/bootstrap/dist/js/bootstrap.min.js?dt=${jsdt}"></script>
+    <link rel="stylesheet" href="${staticDir}bower_components/bootstrap/dist/css/bootstrap.min.css?dt=${jsdt}">
     <!-- Bootstrap WYSIHTML5 -->
-    <script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js?dt=${jsdt}"></script>
+    <script src="${staticDir}plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js?dt=${jsdt}"></script>
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css?dt=${jsdt}">
+    <link rel="stylesheet" href="${staticDir}bower_components/font-awesome/css/font-awesome.min.css?dt=${jsdt}">
 
     <!-- Ionicons -->
-    <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css?dt=${jsdt}">
+    <link rel="stylesheet" href="${staticDir}bower_components/Ionicons/css/ionicons.min.css?dt=${jsdt}">
 
 
 
     <!-- Morris chart -->
-    <script src="../bower_components/raphael/raphael.min.js?dt=${jsdt}"></script>
-    <script src="../bower_components/morris.js/morris.min.js?dt=${jsdt}"></script>
-    <link rel="stylesheet" href="../bower_components/morris.js/morris.css?dt=${jsdt}">
+    <script src="${staticDir}bower_components/raphael/raphael.min.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/morris.js/morris.min.js?dt=${jsdt}"></script>
+    <link rel="stylesheet" href="${staticDir}bower_components/morris.js/morris.css?dt=${jsdt}">
 
     <!-- jvectormap -->
-    <script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js?dt=${jsdt}"></script>
-    <script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js?dt=${jsdt}"></script>
-    <link rel="stylesheet" href="../bower_components/jvectormap/jquery-jvectormap.css?dt=${jsdt}">
+    <script src="${staticDir}plugins/jvectormap/jquery-jvectormap-1.2.2.min.js?dt=${jsdt}"></script>
+    <script src="${staticDir}plugins/jvectormap/jquery-jvectormap-world-mill-en.js?dt=${jsdt}"></script>
+    <link rel="stylesheet" href="${staticDir}bower_components/jvectormap/jquery-jvectormap.css?dt=${jsdt}">
 
     <!-- Date Picker -->
     <!-- date rangepicker -->
-    <script src="../bower_components/moment/min/moment.min.js?dt=${jsdt}"></script>
-    <script src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/moment/min/moment.min.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js?dt=${jsdt}"></script>
     <link rel="stylesheet"
-      href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css?dt=${jsdt}">
+      href="${staticDir}bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css?dt=${jsdt}">
 
     <!-- Daterange picker -->
-    <script src="../bower_components/bootstrap-daterangepicker/daterangepicker.js?dt=${jsdt}"></script>
-    <link rel="stylesheet" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css?dt=${jsdt}">
+    <script src="${staticDir}bower_components/bootstrap-daterangepicker/daterangepicker.js?dt=${jsdt}"></script>
+    <link rel="stylesheet" href="${staticDir}bower_components/bootstrap-daterangepicker/daterangepicker.css?dt=${jsdt}">
 
     <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css?dt=${jsdt}">
+    <link rel="stylesheet" href="${staticDir}plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css?dt=${jsdt}">
 
     <!-- Sparkline -->
-    <script src="../bower_components/jquery-sparkline/dist/jquery.sparkline.min.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/jquery-sparkline/dist/jquery.sparkline.min.js?dt=${jsdt}"></script>
 
     <!-- FastClick -->
-    <script src="../bower_components/fastclick/lib/fastclick.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/fastclick/lib/fastclick.js?dt=${jsdt}"></script>
 
     <!-- iCheck -->
-    <script src="../plugins/iCheck/icheck.min.js?dt=${jsdt}"></script>
-    <link rel="stylesheet" href="../plugins/iCheck/square/blue.css?dt=${jsdt}">
+    <script src="${staticDir}plugins/iCheck/icheck.min.js?dt=${jsdt}"></script>
+    <link rel="stylesheet" href="${staticDir}plugins/iCheck/square/blue.css?dt=${jsdt}">
 
     <!-- Bootstrap Color Picker -->
     <!-- bootstrap color picker -->
-    <script src="../bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-    <link rel="stylesheet" href="../bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+    <script src="${staticDir}bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    <link rel="stylesheet" href="${staticDir}bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
 
     <!-- Select2 -->
-    <link rel="stylesheet" href="../bower_components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="${staticDir}bower_components/select2/dist/css/select2.min.css">
     <!-- Select2 -->
-    <script src="../bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script src="${staticDir}bower_components/select2/dist/js/select2.full.min.js"></script>
     <!-- 中文化 -->
-    <script src="../bower_components/select2/dist/js/i18n/zh-CN.js"></script>
+    <script src="${staticDir}bower_components/select2/dist/js/i18n/zh-CN.js"></script>
 
     <!-- DataTables 自己替换过新版本，使用全功能版本-->
-    <script src="../bower_components/DataTables-1.13.6/js/datatables.min.all.js?dt=${jsdt}"></script>
-    <link rel="stylesheet" href="../bower_components/DataTables-1.13.6/css/datatables.min.all.css?dt=${jsdt}">
+    <script src="${staticDir}bower_components/DataTables-1.13.6/js/datatables.min.all.js?dt=${jsdt}"></script>
+    <link rel="stylesheet" href="${staticDir}bower_components/DataTables-1.13.6/css/datatables.min.all.css?dt=${jsdt}">
     <!-- 国际化文件 -->
-    <script src="../bower_components/DataTables-1.13.6/i18n/datatablesCfg.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/DataTables-1.13.6/i18n/datatablesCfg.js?dt=${jsdt}"></script>
 
     <!-- Google Font -->
-    <link rel="stylesheet" href="../css/googleFront.css?dt=${jsdt}">
+    <link rel="stylesheet" href="${staticDir}css/googleFront.css?dt=${jsdt}">
 
     <!-- AdminLTE App -->
-    <script src="../dist/js/adminlte.js?dt=${jsdt}"></script>
-    <link rel="stylesheet" href="../dist/css/AdminLTE.min.css?dt=${jsdt}">
+    <script src="${staticDir}dist/js/adminlte.js?dt=${jsdt}"></script>
+    <link rel="stylesheet" href="${staticDir}dist/css/AdminLTE.min.css?dt=${jsdt}">
     <!-- AdminLTE 皮肤。
                   从 css/skins 目录下选择一个皮肤，以减少负载，而不是下载所有皮肤。 -->
-    <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css?dt=${jsdt}">
-    <!-- <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css"> -->
+    <link rel="stylesheet" href="${staticDir}dist/css/skins/_all-skins.min.css?dt=${jsdt}">
+    <!-- <link rel="stylesheet" href="${staticDir}dist/css/skins/skin-blue.min.css"> -->
 
 
     <!-- sweetalert组件 -->
-    <script src="../bower_components/sweetalert/sweet-alert.min.js?dt=${jsdt}"></script>
-    <link rel="stylesheet" href="../bower_components/sweetalert/sweet-alert.css?dt=${jsdt}">
+    <script src="${staticDir}bower_components/sweetalert/sweet-alert.min.js?dt=${jsdt}"></script>
+    <link rel="stylesheet" href="${staticDir}bower_components/sweetalert/sweet-alert.css?dt=${jsdt}">
 
     <!-- 百度webuploader-0.1.5上传组件 -->
-    <link rel="stylesheet" href="../bower_components/webuploader-0.1.5/webuploader.css?dt=${jsdt}">
-    <script src="../bower_components/webuploader-0.1.5/webuploader.html5only.min.js?dt=${jsdt}"></script>
+    <link rel="stylesheet" href="${staticDir}bower_components/webuploader-0.1.5/webuploader.css?dt=${jsdt}">
+    <script src="${staticDir}bower_components/webuploader-0.1.5/webuploader.html5only.min.js?dt=${jsdt}"></script>
 
     <!-- bootstrap-table-1.22.1 -->
     <!-- bootstrap-table-treegrid -->
-    <script src="../bower_components/bootstrap-table-1.22.1/dist/bootstrap-table.min.js?dt=${jsdt}"></script>
-    <script src="../bower_components/bootstrap-table-1.22.1/dist/bootstrap-table-locale-all.min.js?dt=${jsdt}"></script>
-    <link rel="stylesheet" href="../bower_components/bootstrap-table-1.22.1/dist/bootstrap-table.min.css?dt=${jsdt}">
+    <script src="${staticDir}bower_components/bootstrap-table-1.22.1/dist/bootstrap-table.min.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/bootstrap-table-1.22.1/dist/bootstrap-table-locale-all.min.js?dt=${jsdt}"></script>
+    <link rel="stylesheet" href="${staticDir}bower_components/bootstrap-table-1.22.1/dist/bootstrap-table.min.css?dt=${jsdt}">
     <script
-      src="../bower_components/bootstrap-table-1.22.1/dist/extensions/treegrid/bootstrap-table-treegrid.min.js?dt=${jsdt}"></script>
+      src="${staticDir}bower_components/bootstrap-table-1.22.1/dist/extensions/treegrid/bootstrap-table-treegrid.min.js?dt=${jsdt}"></script>
 
     <!-- jQuery treetable https://plugins.jquery.com/treetable  https://github.com/ludo/jquery-treetable-->
-    <script src="../bower_components/jquery-treetable-3.2.0/jquery.treetable.js?dt=${jsdt}"></script>
-    <link rel="stylesheet" href="../bower_components/jquery-treetable-3.2.0/css/jquery.treetable.css?dt=${jsdt}">
+    <script src="${staticDir}bower_components/jquery-treetable-3.2.0/jquery.treetable.js?dt=${jsdt}"></script>
+    <link rel="stylesheet" href="${staticDir}bower_components/jquery-treetable-3.2.0/css/jquery.treetable.css?dt=${jsdt}">
     <link rel="stylesheet"
-      href="../bower_components/jquery-treetable-3.2.0/css/jquery.treetable.theme.default.css?dt=${jsdt}">
+      href="${staticDir}bower_components/jquery-treetable-3.2.0/css/jquery.treetable.theme.default.css?dt=${jsdt}">
 
     <!-- 基于JQuery的表格树插件,国人开发 https://gitee.com/harris992/JQuery-TreeTable-Plugin -->
-    <script src="../bower_components/JQuery-TreeTable-Plugin-master/src/bootstrap-treetable.js?dt=${jsdt}"></script>
+    <script src="${staticDir}bower_components/JQuery-TreeTable-Plugin-master/src/bootstrap-treetable.js?dt=${jsdt}"></script>
 
     <!-- jquery.datetimepicker -->
-    <script src="../bower_components/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
-    <link rel="stylesheet" href="../bower_components/jquery-datetimepicker/build/jquery.datetimepicker.min.css">
+    <script src="${staticDir}bower_components/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+    <link rel="stylesheet" href="${staticDir}bower_components/jquery-datetimepicker/build/jquery.datetimepicker.min.css">
 
     <!-- AdminLTE for demo purposes -->
-    <script src="../dist/js/demo.js?dt=${jsdt}"></script>
+    <script src="${staticDir}dist/js/demo.js?dt=${jsdt}"></script>
     <!-- loserStar自己封装的一些东西 -->
-    <script src="../js/ajaxUtils.js?dt=${jsdt}"></script>
-    <script src="../js/loserStarJsUtils.js?dt=${jsdt}"></script>
-    <script src="../js/loserStarBoostrapUtils.js?dt=${jsdt}"></script>
-    <script src="../js/loserStarSweetAlertUtils.js?dt=${jsdt}"></script>
-    <script src="../js/loserStarFileUploadBootstrapWindow_WebUploader1.2.js?dt=${jsdt}"></script>
-    <script src="../js/loserStarTreeDataSelectBootstrapWindow1.0.js?dt=${jsdt}"></script>
-    <script src="../js/loserStarDataSelectBootstrapWindow1.1.js?dt=${jsdt}"></script>
+    <script src="${staticDir}js/ajaxUtils.js?dt=${jsdt}"></script>
+    <script src="${staticDir}js/loserStarJsUtils.js?dt=${jsdt}"></script>
+    <script src="${staticDir}js/loserStarBoostrapUtils.js?dt=${jsdt}"></script>
+    <script src="${staticDir}js/loserStarSweetAlertUtils.js?dt=${jsdt}"></script>
+    <script src="${staticDir}js/loserStarFileUploadBootstrapWindow_WebUploader1.2.js?dt=${jsdt}"></script>
+    <script src="${staticDir}js/loserStarTreeDataSelectBootstrapWindow1.0.js?dt=${jsdt}"></script>
+    <script src="${staticDir}js/loserStarDataSelectBootstrapWindow1.1.js?dt=${jsdt}"></script>
 
-    <script src="../js/dict/dict.js?dt=${jsdt}"></script>
+    <script src="${staticDir}js/dict/dict.js?dt=${jsdt}"></script>
 
 
     <script>
@@ -164,6 +169,28 @@
 
 <!--底部版权信息--begin-->
 <#macro loserStarFooter title="页面标题">
+<script>
+  var browserVersion ="";
+  var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+  var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器
+  var isFF = userAgent.indexOf("Firefox") > -1; //判断是否Firefox浏览器
+  var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器
+  var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
+  if (isFF) {browserVersion = "FF";}
+  if (isOpera) {browserVersion = "Opera";}
+  if (isSafari) {browserVersion = "Safari";}
+  if (isChrome) {browserVersion = "Chrome";}
+  if("FF"!=browserVersion&&"Opera"!=browserVersion&&"Safari"!=browserVersion&&"Chrome"!=browserVersion){
+    alert("您的浏览器版本过低，请升级浏览器后再试！推荐使用谷歌、Edge或360极速模式浏览器");
+    //判断body是否存在，存在就移除body，并且要兼容IE等老浏览器
+    var body = document.body;
+    if (body) {
+      var s = '<h1 style="color:red">您的浏览器版本过低，请升级浏览器后再试！推荐使用谷歌、Edge或360极速模式浏览器</h1>';
+      body.innerHTML = s;
+    }
+
+  }
+</script>
   <nav class="navbar" style="margin-bottom: 5px;min-height:0px">
     <div class="container">
       <div class="pull-right hidden-xs">
@@ -201,13 +228,13 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="../weiAppMedia/downIcon.do?file=hongta_log.png" class="user-image" alt="用户图像">
+                  <img src="${staticDir}img/logo.jpg" class="user-image" alt="用户图像">
                   <span class="hidden-xs">${user.user_name}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="../weiAppMedia/downIcon.do?file=hongta_log.png" class="img-circle" alt="用户图像">
+                    <img src="${staticDir}img/logo.jpg" class="img-circle" alt="用户图像">
                     <p>
                       用户相关信息
                       <small>账号：${user.id}</small>
@@ -260,7 +287,7 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="../weiAppMedia/downIcon.do?file=hongta_log.png" class="img-circle" alt="用户图像">
+              <img src="${staticDir}img/logo.jpg" class="img-circle" alt="用户图像">
             </div>
             <div class="pull-left info">
               <p>${currentUser.user_name}</p>

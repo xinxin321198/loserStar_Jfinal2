@@ -29,7 +29,8 @@ public class ParamPkgInterceptor implements Interceptor {
 		String action = ai.getControllerKey();
 		String methodName = ai.getMethodName(); 
 		System.out.println("---------------拦截器："+action+"/"+methodName);
-		controller.setAttr("port", PropKit.get("tomcatPort"));
+		controller.setAttr("staticDirAutoTime", PropKit.getBoolean("staticDirAutoTime"));
+		controller.setAttr("staticDir", PropKit.get("staticDir"));
 //		Object userid = controller.getRequest().getSession().getAttribute("userid");//原生session
 		//自定义session
 		Object userVo = null;

@@ -31,7 +31,20 @@ public abstract class BaseController extends Controller {
 	/**
 	 * cookie存储sessionId的key，不同的容器可能不一样，需要修改
 	 */
-	public static final String SEESION_COOKIE_KEY=PropKit.get("config.sessionCookieKey");
+	public static final String SEESION_COOKIE_KEY = PropKit.get("config.sessionCookieKey");
+	/**
+	 * cookie存活时间
+	 */
+	public static final int SEESION_COOKIE_MAX_AGE = PropKit.getInt("config.sessionCookieMaxAge");
+	/**
+	 * 设置 Cookie 只在 HTTPS 下发送
+	 */
+	public static final Boolean SEESION_COOKIE_IS_SECURE = PropKit.getBoolean("config.sessionCookieIsSecure");
+	/**
+	 * 设置是否只通过 HTTP 协议访问 Cookie，防止 JavaScript 访问，提高安全性。
+	 */
+	public static final Boolean SEESION_COOKIE_IS_HTTP_ONLY = PropKit.getBoolean("config.sessionCookieIsHttpOnly");
+
 	/**
 	 * session管理器实现类全包路径
 	 */
@@ -371,16 +384,16 @@ public abstract class BaseController extends Controller {
 		getLoserStarSession().removeAttribute("userVo");//移除该session中的登录状态
 		getLoserStarSession().destroy();//销毁session
 	}
-	
+
 	/**
 	 * 获取session，根据实现来，使用那种session
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public LoserStarSession getLoserStarSession() throws Exception {
-		Class sessionManagerClass = Class.forName(SESSION_MANAGER_IMPL_CLASS_PATH);//注意此字符串必须是真实路径，就是带包名的类路径，包名.类名  
+		Class<?> sessionManagerClass = Class.forName(SESSION_MANAGER_IMPL_CLASS_PATH);//注意此字符串必须是真实路径，就是带包名的类路径，包名.类名
 		LoserStarSessionManager sessionManager = (LoserStarSessionManager) sessionManagerClass.newInstance();
-		
+
 		LoserStarSession loserStarSession = null;
 		//如果变量sessionId是空的，就尝试从请求的cookie中获取sessionId
 		Object sessionId = getRequest().getAttribute("sessionId");
@@ -391,11 +404,13 @@ public abstract class BaseController extends Controller {
 		loserStarSession = sessionManager.getSession(sessionId==null?null:sessionId.toString());
 		getRequest().setAttribute("sessionId", loserStarSession.getSessionId());//赋值这个线程的sessionId，以免重复生成
 		//刷新cookie
-		Cookie cookie = new Cookie("JSESSIONID", loserStarSession.getSessionId());
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        getResponse().addCookie(cookie);//将cookie返回
-        return loserStarSession;
+		Cookie cookie = new Cookie(SEESION_COOKIE_KEY, loserStarSession.getSessionId());
+		cookie.setPath("/");
+		cookie.setHttpOnly(SEESION_COOKIE_IS_HTTP_ONLY);//确保 Cookie 不会被 JavaScript 访问,降低了攻击者利用 XSS 漏洞窃取用户会话信息或其他敏感数据的风险,带有 HttpOnly 标志的 Cookie 只能在 HTTP 或 HTTPS 请求中发送给服务器，而不能通过 document.cookie 等浏览器 API 读取。
+		cookie.setSecure(SEESION_COOKIE_IS_SECURE);//Cookie 只能通过 HTTPS（安全的 HTTP 协议）传输，而不能通过 HTTP 传输，但是有些浏览器允许本地localhost上使用。360极速浏览器严格遵守规范，不允许本地站点使用。cookie存储不了会导致登录有问题。如本地需要使用360极速调试，需要架设本地域名代理
+		cookie.setMaxAge(SEESION_COOKIE_MAX_AGE);//设置 Cookie 的最大存活时间
+		getResponse().addCookie(cookie);//将cookie返回
+		return loserStarSession;
 	}
 
 }

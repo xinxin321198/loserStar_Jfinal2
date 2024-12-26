@@ -1,11 +1,8 @@
 package com.kaen.controller.pc;
 
-import java.io.File;
-import java.util.List;
-
+import com.jfinal.core.Path;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.plugin.activerecord.Page;
-import com.kaen.config.annotation.Controller;
 import com.kaen.constants.DsConstans;
 import com.kaen.dao.SysFileDao;
 import com.kaen.entity.SysFile;
@@ -14,12 +11,15 @@ import com.loserstar.utils.db.jfinal.vo.VResult;
 import com.loserstar.utils.idgen.LoserStarIdGenUtil;
 import com.loserstar.utils.json.LoserStarJsonUtil;
 
+import java.io.File;
+import java.util.List;
+
 /**
  * 附件
  * @author loserStar
  *
  */
-@Controller(controllerKey = "/sysFile")
+@Path("/sysFile")
 public class SysFileController extends PcBaseController {
 	
 	private SysFileDao sysFileDao = new SysFileDao(DsConstans.dataSourceName.myql);

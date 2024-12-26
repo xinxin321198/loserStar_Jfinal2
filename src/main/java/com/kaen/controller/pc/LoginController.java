@@ -7,13 +7,9 @@
  */
 package com.kaen.controller.pc;
 
-import java.util.Date;
-
-import javax.imageio.ImageIO;
-
+import com.jfinal.core.Path;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.PropKit;
-import com.kaen.config.annotation.Controller;
 import com.kaen.entity.vo.common.UserVo;
 import com.kaen.service.user.UserService;
 import com.kaen.sms.service.YnzyZpSmsService;
@@ -22,12 +18,15 @@ import com.loserstar.utils.date.LoserStarDateUtils;
 import com.loserstar.utils.db.jfinal.vo.VResult;
 import com.loserstar.utils.json.LoserStarJsonUtil;
 
+import javax.imageio.ImageIO;
+import java.util.Date;
+
 /**
  * author: loserStar
  * date: 2019年8月23日下午3:44:12
  * remarks:登录（这个不需要登录，登录页面）
  */
-@Controller(controllerKey= {"/login"})
+@Path(value="/login")
 public class LoginController extends PcBaseController {
 	private UserService userService = UserService.ins();
 	private YnzyZpSmsService ynzyZpSmsService = YnzyZpSmsService.ins();

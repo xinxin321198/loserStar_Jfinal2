@@ -1,20 +1,16 @@
 package com.kaen.controller;
 
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import com.jfinal.core.Path;
+import com.loserstar.utils.idgen.LoserStarIdGenUtil;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.kaen.config.annotation.Controller;
-import com.loserstar.utils.idgen.LoserStarIdGenUtil;
-
-@Controller(controllerKey = "/contractPayFile")
+@Path(value="/contractPayFile")
 public class ContractPayFileController extends BaseController {
 	
 	public void test() {

@@ -1,11 +1,8 @@
 package com.kaen.controller.pc;
 
-import java.util.Date;
-import java.util.List;
-
+import com.jfinal.core.Path;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.plugin.activerecord.Page;
-import com.kaen.config.annotation.Controller;
 import com.kaen.constants.DsConstans;
 import com.kaen.dao.SysFileDao;
 import com.kaen.dao.SysUserDao;
@@ -17,12 +14,15 @@ import com.loserstar.utils.file.LoserStarFileUtil;
 import com.loserstar.utils.idgen.LoserStarIdGenUtil;
 import com.loserstar.utils.json.LoserStarJsonUtil;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * 用户表
  * @author loserStar
  *
  */
-@Controller(controllerKey = "/sysUser")
+@Path("/sysUser")
 public class SysUserController extends PcBaseController {
 	
 	private SysUserDao sysUserDao = new SysUserDao(DsConstans.dataSourceName.myql);

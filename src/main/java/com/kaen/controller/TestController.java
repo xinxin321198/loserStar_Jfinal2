@@ -8,19 +8,13 @@
 package com.kaen.controller;
 
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.jfinal.aop.Before;
-import com.jfinal.kit.PropKit;
+import com.jfinal.core.Path;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.ehcache.CacheInterceptor;
 import com.jfinal.plugin.redis.Cache;
 import com.jfinal.plugin.redis.Redis;
-import com.kaen.config.annotation.Controller;
 import com.kaen.constants.DsConstans;
 import com.kaen.dao.SysDictDao;
 import com.kaen.dao.SysUserDao;
@@ -29,12 +23,17 @@ import com.loserstar.utils.db.jfinal.base.imp.WhereHelper;
 import com.loserstar.utils.db.jfinal.vo.VResult;
 import com.loserstar.utils.json.LoserStarJsonUtil;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * author: loserStar
  * date: 2019年5月17日下午12:10:27
  * remarks:此controller不需要登录，用来测试工程是否正常
  */
-@Controller(controllerKey= {"/test"})
+@Path(value="/test")
 public class TestController extends BaseController {
 
 	private SysDictDao sysDictDao = new SysDictDao(DsConstans.dataSourceName.myql);

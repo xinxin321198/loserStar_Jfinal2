@@ -1,13 +1,13 @@
 package com.kaen.controller.weiApp;
 
+import com.jfinal.core.Path;
 import com.jfinal.kit.PropKit;
-import com.kaen.config.annotation.Controller;
 import com.kaen.utils.WeiAppUtils;
 import com.kaen.utils.WeiAppUtils.ApiCode2SessionVo;
 import com.loserstar.utils.db.jfinal.vo.VResult;
 import com.loserstar.utils.idgen.LoserStarIdGenUtil;
 
-@Controller(controllerKey= {"/weiAppLogin"})
+@Path(value="/weiAppLogin")
 public class WeiAppLoginController extends WeiAppBaseController {
 	
 	/**

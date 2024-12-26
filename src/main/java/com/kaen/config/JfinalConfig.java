@@ -22,9 +22,11 @@ import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.render.RenderFactory;
 import com.jfinal.template.Engine;
+import com.kaen.config.handler.AntiLeechHandler;
 import com.kaen.config.handler.GlobalHandler;
+import com.kaen.config.handler.UAHandler;
+import com.kaen.config.handler.XssHandler;
 import com.kaen.config.interceptor.ParamPkgInterceptor;
-import com.kaen.config.plugin.ControllerPlugin;
 import com.kaen.constants.DsConstans;
 import com.kaen.constants.EhCacheConstants;
 import com.kaen.entity._MappingKit;
@@ -73,7 +75,7 @@ public class JfinalConfig extends JFinalConfig {
 		me.setEncoding("UTF-8");
 
 		// log.info("configConstant 设置是否开发模式");
-		me.setDevMode(true);
+		me.setDevMode(prop.getBoolean("config.devMode"));
 
 		// log.info("configConstant 视图error page设置");
 		me.setError401View("/common/401.html");
@@ -97,9 +99,11 @@ public class JfinalConfig extends JFinalConfig {
 
 	@Override
 	public void configHandler(Handlers me) {
-		// me.add(new ContextPathHandler("base_path"));
 		// log.info("configHandler 全局配置处理器，主要是记录日志和request域值处理");
+		me.add(new UAHandler());
+		me.add(new AntiLeechHandler());
 		me.add(new GlobalHandler());
+		me.add(new XssHandler());
 		me.add(new UrlSkipHandler(".*/services.*",false));//用于过滤掉webservice，否则生成服务端都会报错
 	}
 
@@ -116,7 +120,7 @@ public class JfinalConfig extends JFinalConfig {
 				PropKit.get("mysql.userName"),
 				PropKit.get("mysql.passWord"));
 		druidPlugin.setDriverClass(PropKit.get("mysql.driverClass"));
-		druidPlugin.set(1, 1, 2);
+		druidPlugin.set(PropKit.getInt("mysql.initialSize"), PropKit.getInt("mysql.minIdle"),PropKit.getInt("mysql.maxActive"));
 		me.add(druidPlugin);
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(DsConstans.dataSourceName.myql,druidPlugin);
 		me.add(arp);
@@ -141,14 +145,14 @@ public class JfinalConfig extends JFinalConfig {
 
 	@Override
 	public void configRoute(Routes me) {
-		//路由扫描注册
-		new ControllerPlugin(me).start();
+		//路由扫描注册（已作废，  jfinal 4.9.03 新增了路由扫描功能，扫描功能需要在 Controller 声明之处使用 @Path 注解）
+//		new ControllerPlugin(me).start();
+		me.scan(PropKit.get("config.scan.package"));
 	}
 
 	@Override
 	public void configEngine(Engine me) {
-		// TODO Auto-generated method stub
-		
+
 	}
 	
 
