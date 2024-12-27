@@ -66,7 +66,7 @@ loserStarDatatablesCfg.initDataTables = function (tableId) {
         processing: true,
         buttons: [
             {
-                text: '按列表导出',
+                text: '按列表导出(datatbales自带)',
                 enabled: true,
                 extend: 'excel',
                 key:'这是key',

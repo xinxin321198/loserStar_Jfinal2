@@ -2,23 +2,21 @@
 var dataPage = {};
 $(function(){
     initQueryParam();//初始化查询条件
-    if(true){
-        //使用page需要引入loserStarPage.js组件，否则如果用其它方式则移除该部分代码--------begin
-        var pageCfg = {
-            pageId:"pageDiv",
-            position:"left",
-            gotoCusPageCallback: listPageEvent.queryPageList,
-            gotoPreviousPageCallback: listPageEvent.queryPageList,
-            gotoNextPageCallback: listPageEvent.queryPageList,
-        }
-        dataPage = new loserStarPage(pageCfg);
-        // 这两个顺序不能放前面
-
-        listPageEvent.queryPageList();
-        //使用page需要引入loserStarPage.js组件，否则如果用其它方式则移除该部分代码--------end
-    }else{
-        listPageEvent.queryList();
+    //使用page需要引入loserStarPage.js组件，否则如果用其它方式则移除该部分代码--------begin
+    var pageCfg = {
+        pageId:"pageDiv",
+        pageSize:1000,
+        position:"left",
+        gotoCusPageCallback: listPageEvent.queryPageList,
+        gotoPreviousPageCallback: listPageEvent.queryPageList,
+        gotoNextPageCallback: listPageEvent.queryPageList,
     }
+    dataPage = new loserStarPage(pageCfg);
+    // 这两个顺序不能放前面
+
+    listPageEvent.queryPageList();
+    //使用page需要引入loserStarPage.js组件，否则如果用其它方式则移除该部分代码--------end
+
 });
 
 /**

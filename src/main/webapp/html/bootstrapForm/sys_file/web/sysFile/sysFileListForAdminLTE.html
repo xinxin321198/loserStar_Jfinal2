@@ -25,15 +25,18 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">盒子标题</h3>
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <a data-toggle="collapse" href="#queryForm">
+                            <i class="fa  fa-sort-down"></i>附件-列表-查询条件（点击展开）
+                        </a>
+                    </h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-
                     <!--查询条件字段---begin -->
-                    <div id="toolbar" class="btn-group">
-                        <form class="form-inline">
+                    <div class="btn-group">
+                        <form id="queryForm" class="form-inline panel-collapse collapse">
                             <div class="form-group">
                                 <label for="id">主键id</label>
                                 <input id="id" type="text" class="form-control"  placeholder="主键id">
@@ -94,13 +97,14 @@
                                 <label for="from_table">附件所属记录的表</label>
                                 <input id="from_table" type="text" class="form-control"  placeholder="附件所属记录的表">
                             </div>
-                            <button id="search" class="btn btn-success" type="button" onclick="listPageEvent.queryList()">查询</button>
                         </form>
                     </div>
-                    <!--查询条件字段---begin -->
-
-                    <!-- 树形列表的一些按钮，当然也可以放表格的按钮---begin -->
+                    <!--查询条件字段---end -->
                     <div id="toolbar" class="btn-group">
+                        <button id="search" class="btn btn-success" type="button" onclick="listPageEvent.queryPageList()">查询</button>
+                    </div>
+                    <!-- 树形列表的一些按钮，当然也可以放表格的按钮---begin -->
+                    <div class="btn-group">
                             <button type="button" class="btn btn-primary" onclick="listPageEvent.addTopNode()">
                                 <span class="glyphicon glyphicon-plus"></span>新增顶层节点
                             </button>
@@ -118,11 +122,11 @@
                             </button>
                     </div>
 
-                    <div id="toolbar" class="btn-group">
+                    <div class="btn-group">
                             <button type="button" class="btn btn-primary" onclick="window.open('formPage.do', '_self');">
                                 <span class="glyphicon glyphicon-plus"></span>新增
                             </button>
-                            <button id="addSub" type="button" class="btn btn-primary" onclick="listPageEvent.refresh()" disabled>
+                            <button id="refresh" type="button" class="btn btn-primary" onclick="listPageEvent.refresh()" disabled>
                                 <span class="glyphicon glyphicon-plus"></span>刷新
                             </button>
                             <button type="button" class="btn bg-olive" onclick="table.getCheckedRows();">

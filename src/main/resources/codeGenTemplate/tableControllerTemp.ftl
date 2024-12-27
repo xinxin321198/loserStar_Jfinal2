@@ -1,11 +1,25 @@
 <#setting classic_compatible=true>
+package com.kaen.controller.pc;
 
+import com.jfinal.core.Path;
+import com.jfinal.kit.HttpKit;
+import com.jfinal.plugin.activerecord.Page;
+import com.kaen.constants.DsConstans;
+import com.kaen.dao.${className}Dao;
+import com.kaen.entity.${className};
+import com.loserstar.utils.db.jfinal.base.imp.WhereHelper;
+import com.loserstar.utils.db.jfinal.vo.VResult;
+import com.loserstar.utils.idgen.LoserStarIdGenUtil;
+import com.loserstar.utils.json.LoserStarJsonUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 /**
  * ${tableRemarks}
  * @author loserStar
  *
  */
-@Controller(controllerKey = "/${fristLowerClassName}")
+@Path(value = "/${fristLowerClassName}")
 public class ${className}Controller extends PcBaseController {
 	
 	private ${className}Dao ${fristLowerClassName}Dao = new ${className}Dao(DsConstans.dataSourceName.${dataSouceName});
@@ -59,41 +73,6 @@ public class ${className}Controller extends PcBaseController {
 		renderJson(result);
 	}
 
-    /**
-	 * 获取数据list不带分页
-	 */
-	public void getListData() {
-		VResult result = new VResult();
-		try {
-            <#list fieldList as field>
-            String ${field.name} = getPara("${field.name}");
-            </#list>
-			//排序字段
-			//String sort_filed = getPara("sort_filed");
-			//String sort_type = getPara("sort_type");
-			WhereHelper whereHelper = new WhereHelper();
-			List<Object> queryParamList = new ArrayList<Object>();
-            <#list fieldList as field>
-            if (checkNull(${field.name})) {
-				whereHelper.addStrWhere("and ${field.name} like ?");
-				queryParamList.add("%"+${field.name}+"%");
-			}
-            </#list>
-			//排序
-			//if (checkNull(sort_filed)) {
-				//whereHelper.addStrOrder("order by "+getSortField(sort_filed)+" "+sort_type);
-			//}
-			whereHelper.addStrOrder("order by sort asc");
-			List<${className}> listData =  ${fristLowerClassName}Dao.getList(whereHelper, ${className}.class, queryParamList.toArray());
-			result.ok("获取数据成功");
-			result.setData(listData);
-		} catch (Exception e) {
-			e.printStackTrace();
-			result.error(e.getMessage());
-		}
-		renderJson(result);
-	}
-	
 	/**
 	 * 表单页面
 	 */

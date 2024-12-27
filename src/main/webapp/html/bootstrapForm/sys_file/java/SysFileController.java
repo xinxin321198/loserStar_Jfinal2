@@ -1,10 +1,24 @@
+package com.kaen.controller.pc;
 
+import com.jfinal.core.Path;
+import com.jfinal.kit.HttpKit;
+import com.jfinal.plugin.activerecord.Page;
+import com.kaen.constants.DsConstans;
+import com.kaen.dao.SysFileDao;
+import com.kaen.entity.SysFile;
+import com.loserstar.utils.db.jfinal.base.imp.WhereHelper;
+import com.loserstar.utils.db.jfinal.vo.VResult;
+import com.loserstar.utils.idgen.LoserStarIdGenUtil;
+import com.loserstar.utils.json.LoserStarJsonUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 /**
  * 附件
  * @author loserStar
  *
  */
-@Controller(controllerKey = "/sysFile")
+@Path(value = "/sysFile")
 public class SysFileController extends PcBaseController {
 	
 	private SysFileDao sysFileDao = new SysFileDao(DsConstans.dataSourceName.myql);
@@ -124,107 +138,6 @@ public class SysFileController extends PcBaseController {
 		renderJson(result);
 	}
 
-    /**
-	 * 获取数据list不带分页
-	 */
-	public void getListData() {
-		VResult result = new VResult();
-		try {
-            String id = getPara("id");
-            String name = getPara("name");
-            String path = getPara("path");
-            String upload_time = getPara("upload_time");
-            String sort = getPara("sort");
-            String del = getPara("del");
-            String create_time = getPara("create_time");
-            String create_user_code = getPara("create_user_code");
-            String create_user_name = getPara("create_user_name");
-            String update_time = getPara("update_time");
-            String update_user_code = getPara("update_user_code");
-            String update_user_name = getPara("update_user_name");
-            String suffix = getPara("suffix");
-            String from_id = getPara("from_id");
-            String from_table = getPara("from_table");
-			//排序字段
-			//String sort_filed = getPara("sort_filed");
-			//String sort_type = getPara("sort_type");
-			WhereHelper whereHelper = new WhereHelper();
-			List<Object> queryParamList = new ArrayList<Object>();
-            if (checkNull(id)) {
-				whereHelper.addStrWhere("and id like ?");
-				queryParamList.add("%"+id+"%");
-			}
-            if (checkNull(name)) {
-				whereHelper.addStrWhere("and name like ?");
-				queryParamList.add("%"+name+"%");
-			}
-            if (checkNull(path)) {
-				whereHelper.addStrWhere("and path like ?");
-				queryParamList.add("%"+path+"%");
-			}
-            if (checkNull(upload_time)) {
-				whereHelper.addStrWhere("and upload_time like ?");
-				queryParamList.add("%"+upload_time+"%");
-			}
-            if (checkNull(sort)) {
-				whereHelper.addStrWhere("and sort like ?");
-				queryParamList.add("%"+sort+"%");
-			}
-            if (checkNull(del)) {
-				whereHelper.addStrWhere("and del like ?");
-				queryParamList.add("%"+del+"%");
-			}
-            if (checkNull(create_time)) {
-				whereHelper.addStrWhere("and create_time like ?");
-				queryParamList.add("%"+create_time+"%");
-			}
-            if (checkNull(create_user_code)) {
-				whereHelper.addStrWhere("and create_user_code like ?");
-				queryParamList.add("%"+create_user_code+"%");
-			}
-            if (checkNull(create_user_name)) {
-				whereHelper.addStrWhere("and create_user_name like ?");
-				queryParamList.add("%"+create_user_name+"%");
-			}
-            if (checkNull(update_time)) {
-				whereHelper.addStrWhere("and update_time like ?");
-				queryParamList.add("%"+update_time+"%");
-			}
-            if (checkNull(update_user_code)) {
-				whereHelper.addStrWhere("and update_user_code like ?");
-				queryParamList.add("%"+update_user_code+"%");
-			}
-            if (checkNull(update_user_name)) {
-				whereHelper.addStrWhere("and update_user_name like ?");
-				queryParamList.add("%"+update_user_name+"%");
-			}
-            if (checkNull(suffix)) {
-				whereHelper.addStrWhere("and suffix like ?");
-				queryParamList.add("%"+suffix+"%");
-			}
-            if (checkNull(from_id)) {
-				whereHelper.addStrWhere("and from_id like ?");
-				queryParamList.add("%"+from_id+"%");
-			}
-            if (checkNull(from_table)) {
-				whereHelper.addStrWhere("and from_table like ?");
-				queryParamList.add("%"+from_table+"%");
-			}
-			//排序
-			//if (checkNull(sort_filed)) {
-				//whereHelper.addStrOrder("order by "+getSortField(sort_filed)+" "+sort_type);
-			//}
-			whereHelper.addStrOrder("order by sort asc");
-			List<SysFile> listData =  sysFileDao.getList(whereHelper, SysFile.class, queryParamList.toArray());
-			result.ok("获取数据成功");
-			result.setData(listData);
-		} catch (Exception e) {
-			e.printStackTrace();
-			result.error(e.getMessage());
-		}
-		renderJson(result);
-	}
-	
 	/**
 	 * 表单页面
 	 */
