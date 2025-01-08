@@ -142,7 +142,7 @@ public abstract class BaseController extends Controller {
 	 * @param fileParamName 二进制文件数据的参数名称
 	 * @param isNewFileName 是否重命名保存到硬盘上的文件名（防止文件覆盖）
 	 * @param newFileName 保存到硬盘上重命名的文件名，如果不存则以uuid自动生成
-	 * @param MultipartRequest 通过MultipartRequest（cos组件）获取文件，不使用jfinal自带的
+	 * @param mRequest 通过MultipartRequest（cos组件）获取文件，不使用jfinal自带的
 	 * @return
 	 * @throws Exception
 	 */
@@ -233,10 +233,8 @@ public abstract class BaseController extends Controller {
 	 * 上传文件(基于Web Uploader的上传文件方式，确保二进制文件参数名为file)
 	 * http://fex.baidu.com/webuploader/ https://github.com/fex-team/webuploader
 	 *
-	 * @param path
+	 * @param dirPath
 	 *            上传目录
-	 * @param newFileName
-	 *            文件的新名称，如果不传，以uuid自动生成
 	 * @return 返回新的文件名
 	 * @throws Exception
 	 */
@@ -247,10 +245,8 @@ public abstract class BaseController extends Controller {
 	 * 上传文件(基于Web Uploader的上传文件方式，确保二进制文件参数名为file)
 	 * http://fex.baidu.com/webuploader/ https://github.com/fex-team/webuploader
 	 *
-	 * @param path
+	 * @param dirPath
 	 *            上传目录
-	 * @param newFileName
-	 *            文件的新名称，如果不传，以uuid自动生成
 	 * @return 返回新的全路径
 	 * @throws Exception
 	 */
@@ -262,7 +258,7 @@ public abstract class BaseController extends Controller {
 	/**
 	 * 下载问价，传入文件的储存路径
 	 * 
-	 * @param url
+	 * @param path 下载的硬盘路径
 	 * @throws UnsupportedEncodingException
 	 */
 	protected void downFile(String path) throws UnsupportedEncodingException {
