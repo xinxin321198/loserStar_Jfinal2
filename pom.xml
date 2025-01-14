@@ -1,215 +1,224 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.loserstar</groupId>
-	<artifactId>loserStar_Jfinal2</artifactId>
-	<version>0.0.1</version>
-	<packaging>war</packaging>
-	<name>loserStar_Jfinal2</name>
-	<description>loserStar_Jfinal2</description>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.loserstar</groupId>
+    <artifactId>loserStar_Jfinal2</artifactId>
+    <version>0.0.1</version>
+    <packaging>war</packaging>
+    <name>loserStar_Jfinal2</name>
+    <description>loserStar_Jfinal2</description>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-	</properties>
-	<!-- 使用阿里 maven 库 -->
-	<repositories>
-		<repository>
-			<id>ali-maven</id>
-			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>fail</checksumPolicy>
-			</snapshots>
-		</repository>
-	</repositories>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+    </properties>
+    <!-- 使用阿里 maven 库 -->
+    <repositories>
+        <repository>
+            <id>ali-maven</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+        </repository>
+    </repositories>
 
-	<dependencies>
-		<!--loserStarUtils -->
-		<!--如果本地的没有该项目的maven工程，则把jar包放入WEB-INF/lib下 并且要自行引入其它相关依赖的jar包-->
-		<dependency>
-			<groupId>com.loserstar</groupId>
-			<artifactId>loserStarUtils</artifactId>
-			<version>8.7-1.8jdk</version>
-		</dependency>
-		
-		
+    <dependencies>
+        <!--因公共仓库没有该库，解决办法-->
+        <!--		方法1(推荐)：https://github.com/xinxin321198/loserStarUtils 下载之后mvn install安装在本地仓库，用如下maven引入-->
+        <dependency>
+            <groupId>com.loserstar</groupId>
+            <artifactId>loserStarUtils</artifactId>
+            <version>8.7-1.8jdk</version>
+        </dependency>
 
-		<!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
-		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache</artifactId>
-			<version>2.10.9.2</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/it.sauronsoftware.cron4j/cron4j -->
-		<dependency>
-			<groupId>it.sauronsoftware.cron4j</groupId>
-			<artifactId>cron4j</artifactId>
-			<version>2.2.5</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/axis/axis -->
-		<dependency>
-			<groupId>axis</groupId>
-			<artifactId>axis</artifactId>
-			<version>1.4</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.novell.ldap/jldap -->
-		<dependency>
-			<groupId>com.novell.ldap</groupId>
-			<artifactId>jldap</artifactId>
-			<version>2009-10-07</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-		<!--访问redis用到-->
-		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-core</artifactId>
-		    <version>2.16.1</version>
-		</dependency>
+        <!--		方法2：loserStarUtils编译成jar包，单独放入WEB-INF/lib，把loserStarUtils用到的依赖pom都copy过来-->
+        <!--        方法3：把所有依赖的jar包都干到WEB-INF/lib下，并且每个依赖都需要使用如下方式本地引入（略麻烦），或者手工通过开发工具引入参与编译（不通过maven）-->
+        <!--        		<dependency>-->
+        <!--        			<groupId>com.loserstar</groupId>-->
+        <!--        			<artifactId>loserStarUtils</artifactId>-->
+        <!--        			<version>8.7-1.8jdk</version>-->
+        <!--        			<scope>system</scope>-->
+        <!--        			<systemPath>${project.basedir}\src\main\webapp\WEB-INF\lib\loserStarUtils-8.7-1.8jdk.jar</systemPath>-->
+        <!--        		</dependency>-->
 
 
+        <!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>2.10.9.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/it.sauronsoftware.cron4j/cron4j -->
+        <dependency>
+            <groupId>it.sauronsoftware.cron4j</groupId>
+            <artifactId>cron4j</artifactId>
+            <version>2.2.5</version>
+        </dependency>
 
-		<!--引入本地jar-->
-		<dependency>
-			<groupId>bpm.rest</groupId>
-			<artifactId>bpm-rest-client</artifactId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>D:\development\jarLib\bpm-rest-api\bpm-rest-client.jar</systemPath>
-		</dependency>
-	</dependencies>
-	
-	
-	<build>
-		<!--
-		    添加 includes 配置后，excludes 默认为所有文件 **/*.*，反之亦然
-		    该规则在 maven-jar-plugin 等插件中同样适用
-		-->
-		<resources>
-			<!-- 添加该配置是为了将 .sql 文件打入 jar 包 -->
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<!-- **/* 前缀用法，可以匹配所有路径 -->
-					<include>**/*.sql</include>
-				</includes>
-			</resource>
+        <!-- https://mvnrepository.com/artifact/axis/axis -->
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis</artifactId>
+            <version>1.4</version>
+        </dependency>
 
-			<!--
-				没有添加 resources 配置时，src/main/resources 目录是默认配置
-			    一旦添加 resources 配置指向 src/main/java 目录时，原先的默认配置被取代，
-			    所以需要添加如下配置将默认配置再添加进来，否则无法使用 src/main/resources
-			    下的资源文件
-			-->
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-		</resources>
+        <!-- https://mvnrepository.com/artifact/com.novell.ldap/jldap -->
+        <dependency>
+            <groupId>com.novell.ldap</groupId>
+            <artifactId>jldap</artifactId>
+            <version>2009-10-07</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <!--访问redis用到-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.16.1</version>
+        </dependency>
 
 
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<encoding>UTF-8</encoding>
-					<!-- java8 保留参数名编译参数 -->
-					<compilerArgument>-parameters</compilerArgument>
-					<compilerArguments>
-						<verbose />
-					</compilerArguments>
-				</configuration>
-			</plugin>
+        <!--引入本地jar-->
+        <dependency>
+            <groupId>bpm.rest</groupId>
+            <artifactId>bpm-rest-client</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>D:\development\jarLib\bpm-rest-api\bpm-rest-client.jar</systemPath>
+        </dependency>
+    </dependencies>
 
-			<!--
-				jar 包中的配置文件优先级高于 config 目录下的 "同名文件"
-				因此，打包时需要排除掉 jar 包中来自 src/main/resources 目录的
-				配置文件，否则部署时 config 目录中的同名配置文件不会生效
-			 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<excludes>
-						<!-- 
-						     *.* 用法，可以匹配 jar 包根目录下所有文件
-						     *.xxx 用法，可以匹配 jar 包根目录下特定扩展名文件，例如：*.xml
-						     **/* 前缀用法，可以匹配所有路径，例如：**/*.txt
-						     / 后缀用法，表示排除目录，例如：pro/
-						     普通字符串用法，表示排除特定文件，例如: filename
-						-->
-						<exclude>*.*</exclude>
-						<exclude>pro/</exclude>
-						<exclude>dev/</exclude>
-						<exclude>filename</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
 
-			<!-- 
-				使用 mvn clean package 打包
-			更多配置可参考官方文档：http://maven.apache.org/plugins/maven-assembly-plugin/single-mojo.html
-	 		-->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.1.0</version>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
+    <build>
+        <!--
+            添加 includes 配置后，excludes 默认为所有文件 **/*.*，反之亦然
+            该规则在 maven-jar-plugin 等插件中同样适用
+        -->
+        <resources>
+            <!-- 添加该配置是为了将 .sql 文件打入 jar 包 -->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <!-- **/* 前缀用法，可以匹配所有路径 -->
+                    <include>**/*.sql</include>
+                </includes>
+            </resource>
 
-						<configuration>
-							<!-- 打包生成的文件名 -->
-							<finalName>${project.artifactId}</finalName>
-							<!-- jar 等压缩文件在被打包进入 zip、tar.gz 时是否压缩，设置为 false
-							可加快打包速度 -->
-							<recompressZippedFiles>false</recompressZippedFiles>
-							<!-- 打包生成的文件是否要追加 package.xml 中定义的 id 值 -->
-							<appendAssemblyId>true</appendAssemblyId>
-							<!-- 指向打包描述文件 package.xml -->
-							<descriptors>
-								<descriptor>package.xml</descriptor>
-							</descriptors>
-							<!-- 打包结果输出的基础目录 -->
-							<outputDirectory>${project.build.directory}/</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+            <!--
+                没有添加 resources 配置时，src/main/resources 目录是默认配置
+                一旦添加 resources 配置指向 src/main/java 目录时，原先的默认配置被取代，
+                所以需要添加如下配置将默认配置再添加进来，否则无法使用 src/main/resources
+                下的资源文件
+            -->
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
 
-			<plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-war-plugin</artifactId>
-	            <version>3.2.3</version> <!-- 请根据实际情况使用适当的版本 -->
-	            <configuration>
-	                <webResources>
-	                    <resource>
-	                        <directory>src/main/webapp/WEB-INF/lib</directory> <!-- JAR 包所在的目录 -->
-	                        <targetPath>WEB-INF/lib</targetPath> <!-- 复制到 WAR 包的目录 -->
-	                        <includes>
-	                            <include>*.jar</include> <!-- 包含的 JAR 文件名模式 -->
-	                        </includes>
-	                    </resource>
-	                </webResources>
-	            </configuration>
-	        </plugin>
-		</plugins>
-	</build>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                    <!-- java8 保留参数名编译参数 -->
+                    <compilerArgument>-parameters</compilerArgument>
+                    <compilerArguments>
+                        <verbose/>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+
+            <!--
+                jar 包中的配置文件优先级高于 config 目录下的 "同名文件"
+                因此，打包时需要排除掉 jar 包中来自 src/main/resources 目录的
+                配置文件，否则部署时 config 目录中的同名配置文件不会生效
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <excludes>
+                        <!--
+                             *.* 用法，可以匹配 jar 包根目录下所有文件
+                             *.xxx 用法，可以匹配 jar 包根目录下特定扩展名文件，例如：*.xml
+                             **/* 前缀用法，可以匹配所有路径，例如：**/*.txt
+                             / 后缀用法，表示排除目录，例如：pro/
+                             普通字符串用法，表示排除特定文件，例如: filename
+                        -->
+                        <exclude>*.*</exclude>
+                        <exclude>pro/</exclude>
+                        <exclude>dev/</exclude>
+                        <exclude>filename</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!--
+                使用 mvn clean package 打包
+            更多配置可参考官方文档：http://maven.apache.org/plugins/maven-assembly-plugin/single-mojo.html
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+
+                        <configuration>
+                            <!-- 打包生成的文件名 -->
+                            <finalName>${project.artifactId}</finalName>
+                            <!-- jar 等压缩文件在被打包进入 zip、tar.gz 时是否压缩，设置为 false
+                            可加快打包速度 -->
+                            <recompressZippedFiles>false</recompressZippedFiles>
+                            <!-- 打包生成的文件是否要追加 package.xml 中定义的 id 值 -->
+                            <appendAssemblyId>true</appendAssemblyId>
+                            <!-- 指向打包描述文件 package.xml -->
+                            <descriptors>
+                                <descriptor>package.xml</descriptor>
+                            </descriptors>
+                            <!-- 打包结果输出的基础目录 -->
+                            <outputDirectory>${project.build.directory}/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--			此方式引入的jar包仅会参与打包，不会参与编译，参与编译的jar包需用<dependency>方式引入，或者手工通过ide工具添加-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.3</version> <!-- 请根据实际情况使用适当的版本 -->
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp/WEB-INF/lib</directory> <!-- JAR 包所在的目录 -->
+                            <targetPath>WEB-INF/lib</targetPath> <!-- 复制到 WAR 包的目录 -->
+                            <includes>
+                                <include>*.jar</include> <!-- 包含的 JAR 文件名模式 -->
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -1,3 +1,3 @@
 @call setpath.bat
-mvn mvn dependency:sources
+mvn dependency:sources
 pause
